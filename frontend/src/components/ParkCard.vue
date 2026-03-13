@@ -38,11 +38,11 @@
         </div>
         <span class="rating-text">{{ park.rating || '—' }} ({{ park.review_count || 0 }})</span>
         <div class="feat-icons">
-          <i
+          <FeatureIcon
             v-for="f in (park.features || []).slice(0, 4)"
             :key="f"
-            :class="['pi', featureIcon(f)]"
-            :title="featureLabel(f)"
+            :feature-key="f"
+            :size="18"
           />
         </div>
       </div>
@@ -52,12 +52,10 @@
 
 <script setup>
 import { useParksStore } from '../stores/parks'
-import { useFeatures } from '../composables/useFeatures'
 
 defineProps({ park: { type: Object, required: true } })
 
 const store = useParksStore()
-const { icon: featureIcon, label: featureLabel } = useFeatures()
 </script>
 
 <style scoped>

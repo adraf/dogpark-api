@@ -17,6 +17,7 @@ import Chip from 'primevue/chip'
 import Divider from 'primevue/divider'
 import Skeleton from 'primevue/skeleton'
 
+import FeatureIcon from './components/FeatureIcon.vue'
 import router from './router'
 import App from './App.vue'
 
@@ -52,5 +53,6 @@ app.component('PvChip', Chip)
 app.component('PvDivider', Divider)
 app.component('PvSkeleton', Skeleton)
 app.component('PvToast', Toast)
+app.component('FeatureIcon', FeatureIcon)
 
 app.mount('#app')
