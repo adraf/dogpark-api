@@ -1,12 +1,14 @@
-frontend/node_modules/
-frontend/dist/
-
-
+# Python
 __pycache__/
 *.pyc
 *.db
 .env
 venv/
 
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# OS
 .DS_Store
 Thumbs.db
