@@ -4,9 +4,22 @@
     {
       "src": "api.py",
       "use": "@vercel/python"
+    },
+    {
+      "src": "frontend/dist/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "api.py" }
+    { "src": "/parks(.*)", "dest": "api.py" },
+    { "src": "/counties", "dest": "api.py" },
+    { "src": "/towns", "dest": "api.py" },
+    { "src": "/features", "dest": "api.py" },
+    { "src": "/stats", "dest": "api.py" },
+    { "src": "/admin(.*)", "dest": "api.py" },
+    { "src": "/assets/(.*)", "dest": "frontend/dist/assets/$1" },
+    { "src": "/icons8/(.*)", "dest": "frontend/dist/icons8/$1" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "frontend/dist/index.html" }
   ]
 }
