@@ -27,6 +27,8 @@ from typing import Optional
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 # ─────────────────────────────────────────────
@@ -48,6 +50,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+FRONTEND_PATH = Path(__file__).parent / "index.html"
+
+@app.get("/", include_in_schema=False)
+async def serve_frontend():
+    if FRONTEND_PATH.exists():
+        return FileResponse(str(FRONTEND_PATH))
+    return {"message": "SafePaws UK API — visit /docs for the API reference"}
 
 
 # ─────────────────────────────────────────────
@@ -221,19 +231,13 @@ class PaginatedParks(BaseModel):
 #  Routes
 # ─────────────────────────────────────────────
 
-@app.get("/", tags=["meta"])
-def root():
-    return {
-        "service": "UK Secure Dog Parks API",
-        "version": "1.0.0",
-        "docs": "/docs",
-    }
+
 
 
 @app.get("/parks", response_model=PaginatedParks, tags=["parks"])
 def list_parks(
     page: int = Query(1, ge=1),
-    per_page: int = Query(20, ge=1, le=100),
+    per_page: int = Query(20, ge=1, le=500),
     county: Optional[str] = None,
     town: Optional[str] = None,
     is_free: Optional[bool] = None,
