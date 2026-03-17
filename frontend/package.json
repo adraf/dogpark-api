@@ -16,7 +16,7 @@
     "primevue": "^4.0.0",
     "primeicons": "^7.0.0",
     "leaflet": "^1.9.4",
-    "@primeuix/themes": "^0.5.0"
+    "@primeuix/themes": "^2.0.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
