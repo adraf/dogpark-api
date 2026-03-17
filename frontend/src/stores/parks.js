@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
-const API = '/api'
+const API = import.meta.env.DEV ? '/api' : ''
 
 export const useParksStore = defineStore('parks', () => {
   // ── Raw data ──────────────────────────────────────────
