@@ -219,5 +219,10 @@ watch(() => route.params.id, async () => { await load(); setTimeout(initMap, 150
 .mini-map { height: 260px; margin: 0 -20px; }
 .maps-link { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px; font-size: 13px; font-weight: 500; color: var(--forest-mid); text-decoration: none; transition: background 0.12s; }
 .maps-link:hover { background: var(--parchment); }
-@media (max-width: 900px) { .body { flex-direction: column; } .right-col { width: 100%; } }
+@media (max-width: 900px) {
+  .body { flex-direction: column; padding: 16px; }
+  .right-col { width: 100%; }
+  .hero-name { font-size: 20px; }
+  .stats-grid { grid-template-columns: 1fr; }
+}
 </style>

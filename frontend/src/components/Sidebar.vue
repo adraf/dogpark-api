@@ -1,6 +1,22 @@
 <template>
   <aside class="sidebar">
 
+    <!-- Mobile header: search + close -->
+    <div class="mobile-header">
+      <div class="mobile-search">
+        <AppIcon name="search" :size="15" class="msearch-icon" />
+        <input
+          v-model="searchTerm"
+          type="text"
+          placeholder="Search parks..."
+          @input="store.setFilter('search', searchTerm)"
+        />
+      </div>
+      <button class="close-btn" @click="$emit('close')">
+        <AppIcon name="close" :size="18" />
+      </button>
+    </div>
+
     <!-- Feature Filters (multi-select, derived from data) -->
     <section class="section">
       <h3 class="section-label">Features</h3>
@@ -109,11 +125,16 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { useParksStore } from '../stores/parks'
 import { FEATURE_LABELS } from '../composables/useFeatures'
 
+defineEmits(['close'])
+
 const store = useParksStore()
+
+const searchTerm = ref(store.filters.search)
+watch(() => store.filters.search, v => { searchTerm.value = v })
 
 const priceSlider      = ref(null)
 const sizeSlider       = ref(null)
@@ -252,6 +273,55 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none; width: 16px; height: 16px;
   border-radius: 50%; background: var(--forest-mid);
   border: 2px solid white; box-shadow: 0 1px 4px rgba(35,122,86,0.4); cursor: pointer;
+}
+
+/* Mobile header */
+.mobile-header {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 4px 14px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+.mobile-search {
+  flex: 1; position: relative;
+  display: flex; align-items: center;
+}
+.msearch-icon {
+  position: absolute; left: 10px; opacity: 0.4; pointer-events: none;
+}
+.mobile-search input {
+  width: 100%; padding: 7px 12px 7px 32px;
+  border-radius: 16px; border: 1px solid var(--border);
+  font-size: 13px; outline: none; color: var(--text);
+  background: var(--parchment);
+}
+.mobile-search input:focus { border-color: var(--forest-mid); background: white; }
+.close-btn {
+  background: none; border: none; cursor: pointer;
+  padding: 4px; border-radius: 6px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-muted);
+}
+.close-btn:hover { background: var(--parchment); }
+
+/* ── Mobile sidebar drawer ── */
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    top: 59px; left: 0; bottom: 0;
+    z-index: 50;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: none;
+    width: 280px;
+  }
+  .sidebar.sidebar-open {
+    transform: translateX(0);
+    box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+  }
+  .mobile-header { display: flex; }
 }
 
 /* Footer credit */

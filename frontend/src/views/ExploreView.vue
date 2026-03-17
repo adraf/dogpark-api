@@ -12,7 +12,7 @@
       <Transition name="fade">
         <button v-if="hasActiveFilters" class="clear-btn" @click="store.resetFilters()">
           <AppIcon name="clear-filters" :size="14" />
-          Clear filters
+          <span>Clear filters</span>
         </button>
       </Transition>
 
@@ -41,7 +41,7 @@
 
     <div v-else-if="view === 'list'" class="list-content">
       <div v-if="store.filteredParks.length === 0" class="empty">
-        <AppIcon name="search" :size="44" />
+        <AppIcon name="zoom-out" :size="44" />
         <p>No parks match your filters</p>
         <PvButton label="Clear filters" size="small" outlined @click="store.resetFilters()">
           <template #icon><AppIcon name="clear-filters" :size="14" /></template>
@@ -136,10 +136,21 @@ const paginated = computed(() => {
   margin: 16px; padding: 14px 16px; background: #fff3cd; border: 1px solid #ffc107;
   border-radius: 10px; font-size: 13px; color: #856404; display: flex; align-items: center; gap: 8px;
 }
-.list-content { flex: 1; overflow-y: auto; padding: 20px; }
+.list-content { flex: 1; overflow-y: auto; padding: 20px; scrollbar-width: none; }
+.list-content::-webkit-scrollbar { display: none; }
 .empty { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; gap: 14px; color: var(--text-muted); text-align: center; }
 .empty p { font-size: 15px; color: var(--text); }
 .parks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
 .paginator { margin-top: 20px; }
 .map-view { flex: 1; }
+
+@media (max-width: 767px) {
+  .toolbar { padding: 8px 12px; gap: 8px; }
+  .result-count { display: none; }
+  .sort-select { min-width: 120px; font-size: 12px; }
+  .parks-grid { grid-template-columns: 1fr; }
+  .clear-btn span { display: none; }
+  .clear-btn { padding: 0 10px; }
+  .view-btn { padding: 0 12px; }
+}
 </style>
