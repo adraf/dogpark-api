@@ -1,12 +1,12 @@
 <template>
   <header class="topbar">
     <RouterLink to="/" class="logo">
-      <i class="pi pi-lock" />
+      <AppIcon name="secure" :size="22" />
       SafePaws UK
     </RouterLink>
 
     <div class="search-wrap">
-      <i class="pi pi-search search-icon" />
+      <AppIcon name="search" :size="16" class="search-icon" />
       <input
         v-model="searchTerm"
         type="text"
@@ -17,10 +17,10 @@
 
     <nav class="nav-tabs">
       <RouterLink to="/" class="nav-tab" :class="{ active: route.name === 'explore' }">
-        <i class="pi pi-compass" /> Explore
+        <AppIcon name="compass" :size="15" /> Explore
       </RouterLink>
       <RouterLink to="/favourites" class="nav-tab" :class="{ active: route.name === 'favourites' }">
-        <i class="pi pi-heart" /> Favourites
+        <AppIcon name="heart" :size="15" /> Favourites
         <span v-if="store.favourites.size" class="fav-badge">{{ store.favourites.size }}</span>
       </RouterLink>
     </nav>
@@ -32,8 +32,8 @@ import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useParksStore } from '../stores/parks'
 
-const route = useRoute()
-const store = useParksStore()
+const route      = useRoute()
+const store      = useParksStore()
 const searchTerm = ref(store.filters.search)
 
 watch(() => store.filters.search, v => { searchTerm.value = v })
@@ -52,13 +52,20 @@ watch(() => store.filters.search, v => { searchTerm.value = v })
   color: white; font-size: 18px; font-weight: 600;
   font-family: Georgia, serif; text-decoration: none; white-space: nowrap;
 }
-.logo .pi { color: var(--gold); font-size: 18px; }
-.search-wrap { flex: 1; max-width: 480px; position: relative; display: flex; align-items: center; }
-.search-icon { position: absolute; left: 12px; color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none; }
+.search-wrap {
+  flex: 1; max-width: 480px; position: relative;
+  display: flex; align-items: center;
+}
+.search-icon {
+  position: absolute; left: 12px;
+  opacity: 0.6; pointer-events: none;
+  filter: brightness(0) invert(1);
+}
 .search-wrap input {
   width: 100%; padding: 8px 16px 8px 36px;
   border-radius: 20px; border: none;
-  background: rgba(255,255,255,0.13); color: white; font-size: 14px; outline: none;
+  background: rgba(255,255,255,0.13); color: white;
+  font-size: 14px; outline: none;
 }
 .search-wrap input::placeholder { color: rgba(255,255,255,0.45); }
 .search-wrap input:focus { background: rgba(255,255,255,0.22); }
@@ -70,8 +77,10 @@ watch(() => store.filters.search, v => { searchTerm.value = v })
   color: rgba(255,255,255,0.75); font-size: 13px;
   text-decoration: none; transition: all 0.15s;
 }
+.nav-tab :deep(.app-icon) { filter: brightness(0) invert(1); opacity: 0.75; }
 .nav-tab:hover { background: rgba(255,255,255,0.1); color: white; }
 .nav-tab.active { background: var(--gold); color: var(--forest); border-color: var(--gold); font-weight: 600; }
+.nav-tab.active :deep(.app-icon) { filter: none; opacity: 1; }
 .fav-badge {
   background: var(--forest); color: white;
   font-size: 10px; font-weight: 700;

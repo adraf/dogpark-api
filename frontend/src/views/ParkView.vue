@@ -1,7 +1,10 @@
 <template>
   <div class="park-view">
     <div class="back-bar">
-      <PvButton icon="pi pi-arrow-left" label="Back" size="small" text @click="$router.back()" />
+      <button class="back-btn" @click="$router.back()">
+        <AppIcon name="left" :size="15" />
+        Back
+      </button>
     </div>
 
     <div v-if="loading" class="state-wrap">
@@ -9,7 +12,7 @@
     </div>
 
     <div v-else-if="!park" class="state-wrap">
-      <i class="pi pi-exclamation-circle" style="font-size:44px;color:var(--forest-light)" />
+      <AppIcon name="error" :size="44" />
       <p>Park not found</p>
     </div>
 
@@ -20,24 +23,20 @@
         <div class="hero-body">
           <div class="hero-badges">
             <span v-if="park.is_fully_enclosed" class="badge">
-              <i class="pi pi-lock" /> Fully enclosed
+              <AppIcon name="lock" :size="12" /> Fully enclosed
             </span>
             <span v-if="park.is_free" class="badge free">
-              <i class="pi pi-check-circle" /> Free entry
+              <AppIcon name="check-mark" :size="12" /> Free entry
             </span>
           </div>
           <h1 class="hero-name">{{ park.name }}</h1>
           <div class="hero-loc">
-            <i class="pi pi-map-marker" />
+            <AppIcon name="location" :size="14" style="filter:brightness(0) invert(1);opacity:0.8" />
             {{ park.address }}<span v-if="park.postcode"> · {{ park.postcode }}</span>
           </div>
         </div>
-        <button
-          class="fav-btn"
-          :class="{ active: store.isFavourite(park.id) }"
-          @click="store.toggleFavourite(park.id)"
-        >
-          <i :class="['pi', store.isFavourite(park.id) ? 'pi-heart-fill' : 'pi-heart']" />
+        <button class="fav-btn" :class="{ active: store.isFavourite(park.id) }" @click="store.toggleFavourite(park.id)">
+          <AppIcon :name="store.isFavourite(park.id) ? 'heart-1' : 'heart'" :size="20" />
         </button>
       </div>
 
@@ -45,21 +44,19 @@
       <div class="body">
         <div class="left-col">
 
-          <!-- Description -->
           <section v-if="park.description" class="card">
             <p class="description">{{ park.description }}</p>
           </section>
 
-          <!-- Stats -->
           <section class="card">
             <h2 class="section-title">At a glance</h2>
             <div class="stats-grid">
               <div v-if="park.size_acres" class="stat">
-                <i class="pi pi-expand" />
+                <AppIcon name="expand" :size="18" />
                 <div><div class="stat-val">{{ park.size_acres }} acres</div><div class="stat-lbl">Size</div></div>
               </div>
               <div v-if="park.price_per_hour || park.is_free" class="stat">
-                <i class="pi pi-tag" />
+                <AppIcon name="price-tag" :size="18" />
                 <div>
                   <div class="stat-val" :class="{ free: park.is_free }">
                     {{ park.is_free ? 'Free' : `£${park.price_per_hour}/hr` }}
@@ -68,58 +65,53 @@
                 </div>
               </div>
               <div v-if="park.fence_height_m" class="stat">
-                <i class="pi pi-minus" />
+                <AppIcon name="front-door" :size="18" />
                 <div>
                   <div class="stat-val">{{ park.fence_height_m }}m <small>({{ (park.fence_height_m * 3.28).toFixed(1) }}ft)</small></div>
                   <div class="stat-lbl">Fence height</div>
                 </div>
               </div>
               <div v-if="park.rating" class="stat">
-                <i class="pi pi-star-fill" style="color:var(--gold)" />
+                <AppIcon name="star" :size="18" />
                 <div>
                   <div class="stat-val">{{ park.rating }} <small>({{ park.review_count }} reviews)</small></div>
                   <div class="stat-lbl">Rating</div>
                 </div>
               </div>
               <div v-if="park.max_dogs" class="stat">
-                <i class="pi pi-users" />
+                <AppIcon name="people" :size="18" />
                 <div><div class="stat-val">{{ park.max_dogs }}</div><div class="stat-lbl">Max dogs / session</div></div>
               </div>
               <div v-if="park.opening_hours" class="stat">
-                <i class="pi pi-clock" />
+                <AppIcon name="clock" :size="18" />
                 <div><div class="stat-val small">{{ park.opening_hours }}</div><div class="stat-lbl">Opening hours</div></div>
               </div>
             </div>
           </section>
 
-          <!-- Features -->
           <section v-if="park.features?.length" class="card">
             <h2 class="section-title">Facilities &amp; features</h2>
             <div class="features-grid">
               <span v-for="f in park.features" :key="f" class="feature-chip">
-                <i :class="['pi', featureIcon(f)]" />
+                <FeatureIcon :feature-key="f" :size="16" />
                 {{ featureLabel(f) }}
               </span>
             </div>
           </section>
 
-          <!-- Contact -->
           <section class="card">
             <h2 class="section-title">Contact</h2>
             <div class="contact-list">
-              <a v-if="park.phone"   :href="`tel:${park.phone}`"       class="contact-row"><i class="pi pi-phone" />   {{ park.phone }}</a>
-              <a v-if="park.email"   :href="`mailto:${park.email}`"    class="contact-row"><i class="pi pi-envelope" /> {{ park.email }}</a>
+              <a v-if="park.phone"   :href="`tel:${park.phone}`"    class="contact-row"><AppIcon name="phone"        :size="16" /> {{ park.phone }}</a>
+              <a v-if="park.email"   :href="`mailto:${park.email}`" class="contact-row"><AppIcon name="mail"         :size="16" /> {{ park.email }}</a>
               <a v-if="park.website" :href="park.website" target="_blank" rel="noopener" class="contact-row">
-                <i class="pi pi-globe" /> {{ park.website.replace(/^https?:\/\//, '') }}
+                <AppIcon name="earth-planet" :size="16" /> {{ park.website.replace(/^https?:\/\//, '') }}
               </a>
-              <p v-if="!park.phone && !park.email && !park.website" style="font-size:13px;color:var(--text-muted)">
-                No contact info available
-              </p>
+              <p v-if="!park.phone && !park.email && !park.website" style="font-size:13px;color:var(--text-muted)">No contact info available</p>
             </div>
           </section>
         </div>
 
-        <!-- Map column -->
         <div class="right-col">
           <section class="card map-card">
             <h2 class="section-title">Location</h2>
@@ -127,10 +119,9 @@
             <a
               v-if="park.latitude && park.longitude"
               :href="`https://maps.google.com/?q=${park.latitude},${park.longitude}`"
-              target="_blank" rel="noopener"
-              class="maps-link"
+              target="_blank" rel="noopener" class="maps-link"
             >
-              <i class="pi pi-map-marker" /> Open in Google Maps
+              <AppIcon name="location" :size="15" /> Open in Google Maps
             </a>
           </section>
         </div>
@@ -148,7 +139,7 @@ import { useFeatures } from '../composables/useFeatures'
 
 const route  = useRoute()
 const store  = useParksStore()
-const { icon: featureIcon, label: featureLabel } = useFeatures()
+const { label: featureLabel } = useFeatures()
 
 const park      = ref(null)
 const loading   = ref(true)
@@ -177,10 +168,7 @@ function initMap() {
   })
 
   L.marker([park.value.latitude, park.value.longitude], { icon })
-    .addTo(miniMap)
-    .bindPopup(park.value.name)
-    .openPopup()
-
+    .addTo(miniMap).bindPopup(park.value.name).openPopup()
   miniMap.setView([park.value.latitude, park.value.longitude], 13)
 }
 
@@ -191,102 +179,45 @@ watch(() => route.params.id, async () => { await load(); setTimeout(initMap, 150
 
 <style scoped>
 .park-view { display: flex; flex-direction: column; flex: 1; overflow-y: auto; background: var(--cream); }
-
-.back-bar {
-  padding: 8px 16px; background: white;
-  border-bottom: 1px solid var(--border); flex-shrink: 0;
+.back-bar { padding: 8px 16px; background: white; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+.back-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 7px; border: 1.5px solid #c8d4cc;
+  background: white; color: var(--text-muted); font-size: 13px;
+  font-weight: 500; cursor: pointer; transition: all 0.15s;
 }
-
-.state-wrap {
-  display: flex; flex-direction: column; align-items: center;
-  justify-content: center; flex: 1; gap: 12px;
-  color: var(--text-muted); padding: 60px; font-size: 15px;
-}
-
-.hero {
-  height: 200px;
-  background: linear-gradient(135deg, #1a4a35 0%, #237a56 55%, #3aaa75 100%);
-  position: relative; display: flex; align-items: flex-end; flex-shrink: 0;
-}
-.hero-pattern {
-  position: absolute; inset: 0; opacity: 0.08;
-  background-image:
-    radial-gradient(circle at 15% 50%, white 1px, transparent 1px),
-    radial-gradient(circle at 85% 20%, white 1px, transparent 1px),
-    radial-gradient(circle at 50% 80%, white 1px, transparent 1px);
-  background-size: 50px 50px;
-}
+.back-btn:hover { border-color: var(--forest-mid); color: var(--text); }
+.state-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; gap: 12px; color: var(--text-muted); padding: 60px; font-size: 15px; }
+.hero { height: 200px; background: linear-gradient(135deg, #1a4a35 0%, #237a56 55%, #3aaa75 100%); position: relative; display: flex; align-items: flex-end; flex-shrink: 0; }
+.hero-pattern { position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(circle at 15% 50%, white 1px, transparent 1px), radial-gradient(circle at 85% 20%, white 1px, transparent 1px), radial-gradient(circle at 50% 80%, white 1px, transparent 1px); background-size: 50px 50px; }
 .hero-body { padding: 20px 24px; position: relative; z-index: 1; }
 .hero-badges { display: flex; gap: 6px; margin-bottom: 8px; }
-.badge {
-  background: rgba(255,255,255,0.92); color: var(--forest);
-  font-size: 11px; font-weight: 600; padding: 3px 10px;
-  border-radius: 10px; display: flex; align-items: center; gap: 4px;
-}
+.badge { background: rgba(255,255,255,0.92); color: var(--forest); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 10px; display: flex; align-items: center; gap: 4px; }
 .badge.free { background: #d9f4e8; color: #0e5c33; }
 .hero-name { font-size: 26px; font-weight: 700; color: white; font-family: Georgia, serif; line-height: 1.2; margin-bottom: 6px; }
 .hero-loc { color: rgba(255,255,255,0.8); font-size: 13px; display: flex; align-items: center; gap: 6px; }
-
-.fav-btn {
-  position: absolute; top: 16px; right: 16px;
-  background: rgba(255,255,255,0.92); border: none; border-radius: 50%;
-  width: 40px; height: 40px; display: flex; align-items: center;
-  justify-content: center; cursor: pointer; z-index: 2; transition: all 0.15s;
-}
-.fav-btn .pi { font-size: 18px; color: var(--text-muted); transition: color 0.15s; }
-.fav-btn.active .pi { color: #e53935; }
+.fav-btn { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.92); border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; transition: all 0.15s; }
 .fav-btn:hover { background: white; transform: scale(1.08); }
-
 .body { display: flex; gap: 20px; padding: 24px; align-items: flex-start; }
 .left-col { flex: 1; display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .right-col { width: 320px; flex-shrink: 0; }
-
 .card { background: white; border-radius: var(--radius); border: 1px solid var(--border); padding: 18px 20px; }
-.section-title {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.6px;
-  text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px;
-}
+.section-title { font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 14px; }
 .description { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
-
 .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.stat {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 10px 12px; background: var(--parchment); border-radius: 8px;
-}
-.stat > .pi { font-size: 16px; color: var(--forest-mid); margin-top: 3px; flex-shrink: 0; }
+.stat { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; background: var(--parchment); border-radius: 8px; }
 .stat-val { font-size: 15px; font-weight: 600; color: var(--forest); line-height: 1.3; }
 .stat-val.free { color: #0e5c33; }
 .stat-val.small, .stat-val small { font-size: 13px; font-weight: 400; color: var(--text-muted); }
 .stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-
 .features-grid { display: flex; flex-wrap: wrap; gap: 6px; }
-.feature-chip {
-  display: flex; align-items: center; gap: 5px;
-  font-size: 12px; padding: 5px 10px; border-radius: 10px;
-  background: var(--tag-bg); color: var(--tag-text);
-}
-.feature-chip .pi { font-size: 12px; }
-
+.feature-chip { display: flex; align-items: center; gap: 5px; font-size: 12px; padding: 5px 10px; border-radius: 10px; background: var(--tag-bg); color: var(--tag-text); }
 .contact-list { display: flex; flex-direction: column; gap: 4px; }
-.contact-row {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 13px; color: var(--blue); text-decoration: none;
-  padding: 8px 10px; border-radius: 8px; transition: background 0.12s;
-}
+.contact-row { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--blue); text-decoration: none; padding: 8px 10px; border-radius: 8px; transition: background 0.12s; }
 .contact-row:hover { background: var(--parchment); }
-.contact-row .pi { color: var(--forest-mid); font-size: 14px; width: 16px; text-align: center; }
-
 .map-card { padding-bottom: 0; overflow: hidden; }
 .mini-map { height: 260px; margin: 0 -20px; }
-.maps-link {
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 12px; font-size: 13px; font-weight: 500;
-  color: var(--forest-mid); text-decoration: none; transition: background 0.12s;
-}
+.maps-link { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px; font-size: 13px; font-weight: 500; color: var(--forest-mid); text-decoration: none; transition: background 0.12s; }
 .maps-link:hover { background: var(--parchment); }
-
-@media (max-width: 900px) {
-  .body { flex-direction: column; }
-  .right-col { width: 100%; }
-}
+@media (max-width: 900px) { .body { flex-direction: column; } .right-col { width: 100%; } }
 </style>

@@ -1,6 +1,16 @@
 <template>
   <div class="map-outer">
     <div ref="mapEl" class="map-container" />
+    <div class="map-legend">
+      <div class="legend-item">
+        <span class="legend-dot standard" />
+        Park
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot favourite" />
+        Favourited
+      </div>
+    </div>
   </div>
 </template>
 
@@ -137,4 +147,35 @@ watch(() => store.favourites.size, () => buildMarkers())
   width: 100%;
   height: 100%;
 }
+.map-legend {
+  position: absolute;
+  bottom: 24px;
+  right: 10px;
+  z-index: 1000;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.legend-dot {
+  width: 14px; height: 14px;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+.legend-dot.standard  { background: #237a56; }
+.legend-dot.favourite { background: #c9920a; }
 </style>

@@ -26,12 +26,14 @@ export const useParksStore = defineStore('parks', () => {
 
   // ── Filters ───────────────────────────────────────────
   const filters = ref({
-    search:    '',
-    quick:     'all',   // all | enclosed | free | agility | lighting
-    county:    null,
-    maxPrice:  30,
-    minSize:   0,
-    sort:      'rating',
+    search:   '',
+    features: [],    // array of feature keys (AND logic)
+    enclosed: false,
+    free:     false,
+    county:   null,
+    maxPrice: 30,
+    minSize:  0,
+    sort:     'rating',
   })
 
   function setFilter(key, value) {
@@ -39,7 +41,7 @@ export const useParksStore = defineStore('parks', () => {
   }
 
   function resetFilters() {
-    filters.value = { search: '', quick: 'all', county: null, maxPrice: 30, minSize: 0, sort: 'rating' }
+    filters.value = { search: '', features: [], enclosed: false, free: false, county: null, maxPrice: 30, minSize: 0, sort: 'rating' }
   }
 
   // ── Derived ───────────────────────────────────────────
@@ -53,11 +55,10 @@ export const useParksStore = defineStore('parks', () => {
             !p.county.toLowerCase().includes(t) &&
             !(p.postcode || '').toLowerCase().includes(t)) return false
       }
-      if (f.county && p.county !== f.county) return false
-      if (f.quick === 'enclosed' && !p.is_fully_enclosed) return false
-      if (f.quick === 'free'     && !p.is_free)           return false
-      if (f.quick === 'agility'  && !(p.features || []).includes('agility_equipment')) return false
-      if (f.quick === 'lighting' && !(p.features || []).includes('lighting'))          return false
+      if (f.county   && p.county !== f.county)  return false
+      if (f.enclosed && !p.is_fully_enclosed)    return false
+      if (f.free     && !p.is_free)              return false
+      if (f.features.length && !f.features.every(feat => (p.features || []).includes(feat))) return false
       if (f.maxPrice < 30 && !p.is_free && (p.price_per_hour || 999) > f.maxPrice) return false
       if (f.minSize  > 0  && (p.size_acres || 0) < f.minSize) return false
       return true
