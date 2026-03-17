@@ -166,19 +166,6 @@ def root():
         return FileResponse(str(index))
     return {"message": "SafePaws UK API — visit /docs for the API reference"}
 
-# Serve built Vue assets
-if DIST_PATH.exists():
-    app.mount("/assets", StaticFiles(directory=str(DIST_PATH / "assets")), name="assets")
-    app.mount("/icons8", StaticFiles(directory=str(DIST_PATH / "icons8")), name="icons8")
-
-# Catch-all for Vue Router — serve index.html for any unmatched route
-@app.get("/{full_path:path}", include_in_schema=False)
-def spa_fallback(full_path: str):
-    index = DIST_PATH / "index.html"
-    if index.exists():
-        return FileResponse(str(index))
-    raise HTTPException(status_code=404, detail="Not found")
-
 
 # ─────────────────────────────────────────────
 #  Parks
@@ -375,3 +362,18 @@ def reload_data():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("api:app", host="0.0.0.0", port=8000, reload=True)
+
+# ─────────────────────────────────────────────
+#  Static files + SPA catch-all (must be last)
+# ─────────────────────────────────────────────
+
+if DIST_PATH.exists():
+    app.mount("/assets", StaticFiles(directory=str(DIST_PATH / "assets")), name="assets")
+    app.mount("/icons8", StaticFiles(directory=str(DIST_PATH / "icons8")), name="icons8")
+
+@app.get("/{full_path:path}", include_in_schema=False)
+def spa_fallback(full_path: str):
+    index = DIST_PATH / "index.html"
+    if index.exists():
+        return FileResponse(str(index))
+    raise HTTPException(status_code=404, detail="Not found")
