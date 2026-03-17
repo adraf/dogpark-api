@@ -1,7 +1,7 @@
 <template>
   <header class="topbar">
     <RouterLink to="/" class="logo">
-      <i class="pi pi-star-fill" />
+      <i class="pi pi-lock" />
       SafePaws UK
     </RouterLink>
 
