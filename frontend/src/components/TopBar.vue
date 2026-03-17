@@ -1,0 +1,80 @@
+<template>
+  <header class="topbar">
+    <RouterLink to="/" class="logo">
+      <i class="pi pi-star-fill" />
+      SafePaws UK
+    </RouterLink>
+
+    <div class="search-wrap">
+      <i class="pi pi-search search-icon" />
+      <input
+        v-model="searchTerm"
+        type="text"
+        placeholder="Search by name, town, or county..."
+        @input="store.setFilter('search', searchTerm)"
+      />
+    </div>
+
+    <nav class="nav-tabs">
+      <RouterLink to="/" class="nav-tab" :class="{ active: route.name === 'explore' }">
+        <i class="pi pi-compass" /> Explore
+      </RouterLink>
+      <RouterLink to="/favourites" class="nav-tab" :class="{ active: route.name === 'favourites' }">
+        <i class="pi pi-heart" /> Favourites
+        <span v-if="store.favourites.size" class="fav-badge">{{ store.favourites.size }}</span>
+      </RouterLink>
+    </nav>
+  </header>
+</template>
+
+<script setup>
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { useParksStore } from '../stores/parks'
+
+const route = useRoute()
+const store = useParksStore()
+const searchTerm = ref(store.filters.search)
+
+watch(() => store.filters.search, v => { searchTerm.value = v })
+</script>
+
+<style scoped>
+.topbar {
+  display: flex; align-items: center; gap: 16px;
+  height: 56px; padding: 0 20px;
+  background: var(--forest);
+  border-bottom: 3px solid var(--gold);
+  flex-shrink: 0;
+}
+.logo {
+  display: flex; align-items: center; gap: 8px;
+  color: white; font-size: 18px; font-weight: 600;
+  font-family: Georgia, serif; text-decoration: none; white-space: nowrap;
+}
+.logo .pi { color: var(--gold); font-size: 18px; }
+.search-wrap { flex: 1; max-width: 480px; position: relative; display: flex; align-items: center; }
+.search-icon { position: absolute; left: 12px; color: rgba(255,255,255,0.6); font-size: 14px; pointer-events: none; }
+.search-wrap input {
+  width: 100%; padding: 8px 16px 8px 36px;
+  border-radius: 20px; border: none;
+  background: rgba(255,255,255,0.13); color: white; font-size: 14px; outline: none;
+}
+.search-wrap input::placeholder { color: rgba(255,255,255,0.45); }
+.search-wrap input:focus { background: rgba(255,255,255,0.22); }
+.nav-tabs { display: flex; gap: 4px; margin-left: auto; }
+.nav-tab {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.25);
+  color: rgba(255,255,255,0.75); font-size: 13px;
+  text-decoration: none; transition: all 0.15s;
+}
+.nav-tab:hover { background: rgba(255,255,255,0.1); color: white; }
+.nav-tab.active { background: var(--gold); color: var(--forest); border-color: var(--gold); font-weight: 600; }
+.fav-badge {
+  background: var(--forest); color: white;
+  font-size: 10px; font-weight: 700;
+  padding: 1px 5px; border-radius: 8px; margin-left: 2px;
+}
+</style>

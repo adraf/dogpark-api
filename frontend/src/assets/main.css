@@ -1,0 +1,43 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --forest:       #1a4a35;
+  --forest-mid:   #237a56;
+  --forest-light: #3aaa75;
+  --cream:        #f5f7f5;
+  --parchment:    #eaf0ea;
+  --gold:         #f0b429;
+  --gold-dark:    #c9920a;
+  --blue:         #1a6fbb;
+  --text:         #1a1a1a;
+  --text-muted:   #5a6670;
+  --border:       rgba(26,74,53,0.13);
+  --tag-bg:       #e2f2ea;
+  --tag-text:     #1a4a35;
+  --radius:       10px;
+  --shadow:       0 2px 12px rgba(26,74,53,0.10);
+}
+
+html, body, #app {
+  height: 100%;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+}
+
+/* Leaflet overrides */
+.leaflet-container { font-family: inherit; }
+.leaflet-popup-content-wrapper {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.leaflet-popup-content { margin: 12px 14px; font-size: 13px; }
+
+/* PrimeVue overrides */
+.p-button-sm { font-size: 13px; }
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
