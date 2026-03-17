@@ -98,6 +98,13 @@
       </button>
     </section>
 
+
+    <!-- Footer credit -->
+    <div class="sidebar-footer">
+      <p>Made by <a href="https://www.adamraffertywebdesign.com/" target="_blank" rel="noopener">Adam Rafferty Web Design</a></p>
+      <p>Icons by <a href="https://icons8.com/" target="_blank" rel="noopener">icons8</a></p>
+    </div>
+
   </aside>
 </template>
 
@@ -160,6 +167,7 @@ onMounted(() => {
   width: 240px; flex-shrink: 0; background: white;
   border-right: 1px solid var(--border);
   overflow-y: auto; padding: 16px 12px;
+  display: flex; flex-direction: column;
 }
 .section { margin-bottom: 22px; }
 .section-label {
@@ -244,5 +252,28 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none; width: 16px; height: 16px;
   border-radius: 50%; background: var(--forest-mid);
   border: 2px solid white; box-shadow: 0 1px 4px rgba(35,122,86,0.4); cursor: pointer;
+}
+
+/* Footer credit */
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px 10px 8px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.sidebar-footer p {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.sidebar-footer a {
+  color: var(--forest-mid);
+  text-decoration: none;
+  font-weight: 500;
+}
+.sidebar-footer a:hover {
+  text-decoration: underline;
 }
 </style>
