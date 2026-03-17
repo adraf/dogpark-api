@@ -51,13 +51,20 @@ _client: Optional[MongoClient] = None
 
 def get_col() -> Collection:
     global _client
-    if _client is None:
-        _client = MongoClient(MONGO_URI)
-    col = _client[DB_NAME][COL_NAME]
-    # Seed if empty
-    if col.count_documents({}) == 0:
-        _seed(col)
-    return col
+    try:
+        if _client is None:
+            _client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+        col = _client[DB_NAME][COL_NAME]
+        # Seed if empty — wrapped separately so connection errors don't crash startup
+        try:
+            if col.count_documents({}) == 0:
+                _seed(col)
+        except Exception as e:
+            print(f"Seed check failed: {e}")
+        return col
+    except Exception as e:
+        _client = None
+        raise HTTPException(status_code=503, detail=f"Database connection failed: {e}")
 
 
 def _seed(col: Collection):

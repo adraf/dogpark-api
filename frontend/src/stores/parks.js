@@ -87,19 +87,26 @@ export const useParksStore = defineStore('parks', () => {
   })
 
   // ── Fetch ─────────────────────────────────────────────
-  async function fetchAll() {
+  async function fetchAll(retries = 3) {
     loading.value = true
     error.value   = null
-    try {
-      const res  = await fetch(`${API}/parks?per_page=500`)
-      if (!res.ok) throw new Error(`API error ${res.status}`)
-      const data = await res.json()
-      allParks.value = data.results
-    } catch (e) {
-      error.value = e.message
-    } finally {
-      loading.value = false
+    for (let i = 0; i < retries; i++) {
+      try {
+        const res  = await fetch(`${API}/parks?per_page=500`)
+        if (!res.ok) throw new Error(`API error ${res.status}`)
+        const data = await res.json()
+        allParks.value = data.results
+        loading.value  = false
+        return
+      } catch (e) {
+        if (i < retries - 1) {
+          await new Promise(r => setTimeout(r, 1500)) // wait 1.5s between retries
+        } else {
+          error.value = e.message
+        }
+      }
     }
+    loading.value = false
   }
 
   async function fetchPark(id) {
