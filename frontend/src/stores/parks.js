@@ -66,7 +66,12 @@ export const useParksStore = defineStore('parks', () => {
 
     const s = filters.value.sort
     result.sort((a, b) => {
-      if (s === 'rating') return (b.rating || 0) - (a.rating || 0)
+      if (s === 'rating') {
+        // Weighted score: rating * log(review_count + 1) so volume matters
+        const scoreA = (a.rating || 0) * Math.log((a.review_count || 0) + 1)
+        const scoreB = (b.rating || 0) * Math.log((b.review_count || 0) + 1)
+        return scoreB - scoreA
+      }
       if (s === 'price')  return (a.price_per_hour || 999) - (b.price_per_hour || 999)
       if (s === 'size')   return (b.size_acres || 0) - (a.size_acres || 0)
       return a.name.localeCompare(b.name)
