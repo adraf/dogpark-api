@@ -18,7 +18,7 @@
 
     <div v-else class="content">
       <!-- Hero -->
-      <div class="hero">
+      <div class="hero" :style="park.images && park.images.length ? `background-image:url(${park.images[0]});background-size:cover;background-position:center` : ''">
         <div class="hero-pattern" />
         <div class="hero-body">
           <div class="hero-badges">
@@ -189,14 +189,15 @@ watch(() => route.params.id, async () => { await load(); setTimeout(initMap, 150
 .back-btn:hover { border-color: var(--forest-mid); color: var(--text); }
 .state-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; gap: 12px; color: var(--text-muted); padding: 60px; font-size: 15px; }
 .hero { height: 200px; background: linear-gradient(135deg, #1a4a35 0%, #237a56 55%, #3aaa75 100%); position: relative; display: flex; align-items: flex-end; flex-shrink: 0; }
+.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%); }
 .hero-pattern { position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(circle at 15% 50%, white 1px, transparent 1px), radial-gradient(circle at 85% 20%, white 1px, transparent 1px), radial-gradient(circle at 50% 80%, white 1px, transparent 1px); background-size: 50px 50px; }
-.hero-body { padding: 20px 24px; position: relative; z-index: 1; }
+.hero-body { padding: 20px 24px; position: relative; z-index: 2; }
 .hero-badges { display: flex; gap: 6px; margin-bottom: 8px; }
 .badge { background: rgba(255,255,255,0.92); color: var(--forest); font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 10px; display: flex; align-items: center; gap: 4px; }
 .badge.free { background: #d9f4e8; color: #0e5c33; }
 .hero-name { font-size: 26px; font-weight: 700; color: white; font-family: Georgia, serif; line-height: 1.2; margin-bottom: 6px; }
 .hero-loc { color: rgba(255,255,255,0.8); font-size: 13px; display: flex; align-items: center; gap: 6px; }
-.fav-btn { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.92); border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 2; transition: all 0.15s; }
+.fav-btn { position: absolute; top: 16px; right: 16px; background: rgba(255,255,255,0.92); border: none; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 3; transition: all 0.15s; }
 .fav-btn:hover { background: white; transform: scale(1.08); }
 .body { display: flex; gap: 20px; padding: 24px; align-items: flex-start; }
 .left-col { flex: 1; display: flex; flex-direction: column; gap: 16px; min-width: 0; }

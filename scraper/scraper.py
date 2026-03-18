@@ -434,6 +434,8 @@ class GooglePlacesScraper:
         ("Newcastle", 54.9783, -1.6178),
     ]
 
+    PHOTO_URL = "https://maps.googleapis.com/maps/api/place/photo"
+
     def __init__(self, api_key: str):
         self.api_key = api_key
 
@@ -479,16 +481,83 @@ class GooglePlacesScraper:
                 log.debug(f"[GooglePlaces] Parse error: {e}")
         return parks
 
+    def _get_details(self, place_id: str) -> dict:
+        """Fetch full place details including photos, phone, website, opening hours."""
+        resp = requests.get(
+            self.DETAILS_URL,
+            params={
+                "place_id": place_id,
+                "fields": "name,formatted_phone_number,website,opening_hours,photos,editorial_summary",
+                "key": self.api_key,
+            },
+            timeout=15,
+        )
+        return resp.json().get("result", {})
+
+    def _get_photo_url(self, photo_reference: str, max_width: int = 800) -> str:
+        """Return a proxy-safe photo URL without embedding the API key."""
+        return f"https://maps.googleapis.com/maps/api/place/photo?maxwidth={max_width}&photo_reference={photo_reference}&key=REDACTED"
+
+    def _resolve_photo_url(self, photo_reference: str, max_width: int = 800) -> str:
+        """Follow the redirect to get the actual CDN image URL (no key in final URL)."""
+        try:
+            resp = requests.get(
+                self.PHOTO_URL,
+                params={
+                    "maxwidth": max_width,
+                    "photo_reference": photo_reference,
+                    "key": self.api_key,
+                },
+                timeout=10,
+                allow_redirects=True,
+            )
+            # The final URL after redirect is a CDN URL with no API key
+            return resp.url
+        except Exception:
+            return None
+
     def _parse_result(self, r: dict) -> DogPark:
-        loc = r.get("geometry", {}).get("location", {})
-        name = r.get("name", "")
-        address = r.get("formatted_address", "")
+        loc      = r.get("geometry", {}).get("location", {})
+        name     = r.get("name", "")
+        address  = r.get("formatted_address", "")
         postcode = _extract_postcode(address)
+        place_id = r.get("place_id", "")
+
+        # Fetch full details for phone, website, hours, photos
+        details  = {}
+        images   = []
+        phone    = None
+        website  = None
+        opening  = None
+        description = ""
+
+        try:
+            details = self._get_details(place_id)
+            time.sleep(0.2)  # polite delay
+
+            phone   = details.get("formatted_phone_number")
+            website = details.get("website")
+            hours   = details.get("opening_hours", {})
+            opening = ", ".join(hours.get("weekday_text", [])) or None
+            summary = details.get("editorial_summary", {})
+            description = summary.get("overview", "")
+
+            # Get up to 3 photo URLs — follow redirect to get clean CDN URL
+            photos = details.get("photos", [])[:3]
+            for photo in photos:
+                ref = photo.get("photo_reference")
+                if ref:
+                    url = self._resolve_photo_url(ref)
+                    if url:
+                        images.append(url)
+
+        except Exception as e:
+            log.debug(f"[GooglePlaces] Details fetch failed for {name}: {e}")
 
         return DogPark(
-            id=_make_id(name, r.get("place_id", "")),
+            id=_make_id(name, place_id),
             name=name,
-            description="",
+            description=description,
             address=address,
             town=_guess_town(address),
             county=_guess_county(address),
@@ -497,8 +566,12 @@ class GooglePlacesScraper:
             longitude=loc.get("lng"),
             rating=r.get("rating"),
             review_count=r.get("user_ratings_total", 0),
+            phone=phone,
+            website=website,
+            opening_hours=opening,
+            images=images,
             source="google_places",
-            source_url=f"https://maps.google.com/?cid={r.get('place_id','')}",
+            source_url=f"https://maps.google.com/?cid={place_id}",
         )
 
 

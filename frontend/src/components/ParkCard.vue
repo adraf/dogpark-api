@@ -1,13 +1,13 @@
 <template>
   <div class="park-card" @click="$router.push(`/park/${park.id}`)">
-    <div class="card-img">
-      <div class="card-img-pattern" />
+    <div class="card-img" :style="park.images && park.images.length ? `background-image:url(${park.images[0]});background-size:cover;background-position:center` : ''">
+      <div v-if="!park.images || !park.images.length" class="card-img-pattern" />
       <button
         class="fav-btn" :class="{ active: store.isFavourite(park.id) }"
         @click.stop="store.toggleFavourite(park.id)"
         :title="store.isFavourite(park.id) ? 'Remove from favourites' : 'Add to favourites'"
       >
-        <AppIcon :name="store.isFavourite(park.id) ? 'heart' : 'heart-1'" :size="16" />
+        <AppIcon :name="store.isFavourite(park.id) ? 'heart-1' : 'heart'" :size="16" />
       </button>
       <span v-if="park.is_fully_enclosed" class="card-badge">
         <AppIcon name="lock" :size="12" /> Fully enclosed
