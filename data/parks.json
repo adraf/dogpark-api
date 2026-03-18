@@ -172,7 +172,10 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "agility_equipment",
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -324,7 +327,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "shelter"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -511,7 +516,9 @@
     "website": "https://humphreyshappyhounds.simplybook.it/",
     "email": null,
     "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Sunday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -776,7 +783,9 @@
     "website": "https://www.royalparks.org.uk/visit/parks/st-jamess-park",
     "email": null,
     "opening_hours": "Monday: 5:00\u202fAM\u2009\u2013\u200912:00\u202fAM, Tuesday: 5:00\u202fAM\u2009\u2013\u200912:00\u202fAM, Wednesday: 5:00\u202fAM\u2009\u2013\u200912:00\u202fAM, Thursday: 5:00\u202fAM\u2009\u2013\u200912:00\u202fAM, Friday: 5:00\u202fAM\u2009\u2013\u200912:00\u202fAM, Saturday: 5:00\u202fAM\u2009\u2013\u200912:00\u202fAM, Sunday: 5:00\u202fAM\u2009\u2013\u200912:00\u202fAM",
-    "features": [],
+    "features": [
+      "cafe"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -893,7 +902,9 @@
     "website": "https://www.westminster.gov.uk/leisure-libraries-and-community/parks-and-open-spaces/parks",
     "email": null,
     "opening_hours": "Monday: 7:30\u202fAM\u2009\u2013\u20097:30\u202fPM, Tuesday: 7:30\u202fAM\u2009\u2013\u20097:30\u202fPM, Wednesday: 7:30\u202fAM\u2009\u2013\u20097:30\u202fPM, Thursday: 7:30\u202fAM\u2009\u2013\u20097:30\u202fPM, Friday: 7:30\u202fAM\u2009\u2013\u20097:30\u202fPM, Saturday: 7:30\u202fAM\u2009\u2013\u20097:30\u202fPM, Sunday: 7:30\u202fAM\u2009\u2013\u20097:30\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -931,7 +942,10 @@
     "website": "http://www.myattsfieldspark.info/",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "agility_equipment",
+      "cafe"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -1165,7 +1179,9 @@
     "website": "http://www.hounslow.gov.uk/",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -1240,7 +1256,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -1316,7 +1334,9 @@
     "website": null,
     "email": null,
     "opening_hours": "Monday: Closed, Tuesday: Closed, Wednesday: 8:00\u202fAM\u2009\u2013\u20094:00\u202fPM, Thursday: Closed, Friday: 8:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Sunday: 9:00\u202fAM\u2009\u2013\u20094:00\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -1767,7 +1787,9 @@
     "website": "https://hopwooddogrun.com/",
     "email": null,
     "opening_hours": "Monday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -1961,7 +1983,9 @@
     "website": "https://tithebarnpaddocks.co.uk/",
     "email": null,
     "opening_hours": "Monday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 5:00\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [],
+    "features": [
+      "shelter"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -2081,7 +2105,9 @@
     "website": null,
     "email": null,
     "opening_hours": "Monday: Closed, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -2382,7 +2408,9 @@
     "website": "https://www.checkhillfarmdogfield.co.uk/",
     "email": null,
     "opening_hours": "Monday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -2421,7 +2449,9 @@
     "website": "http://www.woofingwoods.com/",
     "email": null,
     "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Sunday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -2916,7 +2946,9 @@
     "website": "http://www.lowfieldmeadow.co.uk/",
     "email": null,
     "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20096:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20096:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20096:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20096:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20096:00\u202fPM, Saturday: 9:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Sunday: 9:00\u202fAM\u2009\u2013\u20095:00\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -3030,7 +3062,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -3218,7 +3252,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -3254,7 +3290,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -3290,7 +3328,9 @@
     "website": "http://www.dogsrun4fun.co.uk/",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -3330,7 +3370,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -3862,7 +3904,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -3898,7 +3942,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "shelter"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -4195,7 +4241,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -4307,7 +4355,10 @@
     "website": "https://mossvalleytails.co.uk/",
     "email": null,
     "opening_hours": "Monday: 6:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Tuesday: 6:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Wednesday: 6:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Thursday: 6:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Friday: 6:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Saturday: 6:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Sunday: 6:00\u202fAM\u2009\u2013\u200910:00\u202fPM",
-    "features": [],
+    "features": [
+      "lighting",
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -4418,7 +4469,10 @@
     "website": null,
     "email": null,
     "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Sunday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM",
-    "features": [],
+    "features": [
+      "shelter",
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -4534,7 +4588,9 @@
     "website": "https://www.head2paws.co.uk/",
     "email": null,
     "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Sunday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM",
-    "features": [],
+    "features": [
+      "shelter"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -4574,7 +4630,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "shelter"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -4729,7 +4787,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "shelter"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -4923,7 +4983,9 @@
     "website": "http://www.sk9a.co.uk/",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -5313,7 +5375,9 @@
     "website": null,
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -5392,7 +5456,9 @@
     "website": "https://www.mollysmeadow.co.uk/",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -5432,7 +5498,9 @@
     "website": "http://www.cullingworthpooches.com/",
     "email": null,
     "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Saturday: 9:00\u202fAM\u2009\u2013\u20096:30\u202fPM, Sunday: 10:00\u202fAM\u2009\u2013\u20096:30\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -5472,7 +5540,9 @@
     "website": "https://mydogpaddock.co.uk/tarbock/",
     "email": null,
     "opening_hours": "Monday: 4:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Tuesday: 4:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Wednesday: 4:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Thursday: 4:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Friday: 4:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Saturday: 4:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Sunday: 4:00\u202fAM\u2009\u2013\u200911:00\u202fPM",
-    "features": [],
+    "features": [
+      "water"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -5952,7 +6022,9 @@
     "website": "https://topdogzfield.com/",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -6072,7 +6144,9 @@
     "website": "https://doggyvipfield.com/",
     "email": null,
     "opening_hours": "Monday: 10:00\u202fAM\u2009\u2013\u20094:00\u202fPM, Tuesday: 10:00\u202fAM\u2009\u2013\u20091:00\u202fPM, Wednesday: 10:00\u202fAM\u2009\u2013\u20094:00\u202fPM, Thursday: 10:00\u202fAM\u2009\u2013\u20094:00\u202fPM, Friday: 10:00\u202fAM\u2009\u2013\u20094:00\u202fPM, Saturday: 10:30\u202fAM\u2009\u2013\u20094:00\u202fPM, Sunday: 10:30\u202fAM\u2009\u2013\u20091:30\u202fPM",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -6112,7 +6186,9 @@
     "website": "https://www.mydogmeadow.co.uk/",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -6188,7 +6264,9 @@
     "website": "https://muddymuttmeadows.co.uk/",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -6268,7 +6346,9 @@
     "website": null,
     "email": null,
     "opening_hours": "Monday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Tuesday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Wednesday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Thursday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Friday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Saturday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Sunday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -6508,7 +6588,9 @@
     "website": "https://www.merseyforest.org.uk/things-to-do/walks-bike-rides-and-more/woodlands/otterspool-park/",
     "email": null,
     "opening_hours": "Monday: 12:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Tuesday: 12:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Wednesday: 12:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Thursday: 12:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Friday: 12:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Saturday: 12:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Sunday: 12:00\u202fAM\u2009\u2013\u200911:58\u202fPM",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -6588,7 +6670,9 @@
     "website": "http://www.forestfarmservices.co.uk/",
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -6824,7 +6908,9 @@
     "website": null,
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -6864,7 +6950,9 @@
     "website": "https://thestackyardparkrunfreedogparksandpuppypaddock.simplybook.it/v2/",
     "email": null,
     "opening_hours": "Monday: 4:00\u2009\u2013\u20098:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Friday: 4:00\u2009\u2013\u20098:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Sunday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM",
-    "features": [],
+    "features": [
+      "separate_small_dog_area"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -7144,7 +7232,9 @@
     "website": "https://www.edinburgh.gov.uk/",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -7344,7 +7434,9 @@
     "website": "https://www.friendsofinverleithpark.co.uk/about-the-park.html",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -8180,7 +8272,9 @@
     "website": "http://www.astleydogpark.co.uk/",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM",
-    "features": [],
+    "features": [
+      "agility_equipment"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -8620,7 +8714,9 @@
     "website": "https://www.doggosworld.co.uk/",
     "email": null,
     "opening_hours": "Monday: 8:30\u202fAM\u2009\u2013\u20095:00\u202fPM, Tuesday: 8:30\u202fAM\u2009\u2013\u20095:00\u202fPM, Wednesday: 8:30\u202fAM\u2009\u2013\u20095:00\u202fPM, Thursday: 8:30\u202fAM\u2009\u2013\u20095:00\u202fPM, Friday: 8:30\u202fAM\u2009\u2013\u20095:00\u202fPM, Saturday: 8:30\u202fAM\u2009\u2013\u20095:00\u202fPM, Sunday: 8:30\u202fAM\u2009\u2013\u20095:00\u202fPM",
-    "features": [],
+    "features": [
+      "shelter"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -8776,7 +8872,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -8892,7 +8990,9 @@
     "website": "https://www.manchester.gov.uk/directory_record/439713/brookdale_park/category/301/all_parks_playgrounds_and_open_spaces",
     "email": null,
     "opening_hours": "Monday: 5:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Tuesday: 5:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Wednesday: 5:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Thursday: 5:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Friday: 5:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Saturday: 5:00\u202fAM\u2009\u2013\u200911:58\u202fPM, Sunday: 5:00\u202fAM\u2009\u2013\u200911:58\u202fPM",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -9012,7 +9112,9 @@
     "website": "https://adlingtondogfield.co.uk/",
     "email": null,
     "opening_hours": "Monday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -9732,7 +9834,9 @@
     "website": "https://www.bristol.gov.uk/museums-parks-sports-culture/parks-and-open-spaces",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -10768,7 +10872,9 @@
     "website": "https://sweetwell.co.uk/",
     "email": null,
     "opening_hours": "Monday: 5:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Tuesday: 5:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Wednesday: 5:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Thursday: 5:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Friday: 5:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Saturday: 5:00\u202fAM\u2009\u2013\u200911:00\u202fPM, Sunday: 5:00\u202fAM\u2009\u2013\u200911:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -10928,7 +11034,9 @@
     "website": "http://www.cardiffparks.org.uk/",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "cafe"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -11008,7 +11116,9 @@
     "website": null,
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -11048,7 +11158,9 @@
     "website": "https://www.cardiffparks.org.uk/otheropenspaces/minsters-sandies/index.shtml",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "water"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -11088,7 +11200,9 @@
     "website": "https://www.outdoorcardiff.com/cy/parciau/caeau-pontcanna-a-gerddi-sophia/",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -11128,7 +11242,9 @@
     "website": "https://www.cardiffparks.org.uk/otheropenspaces/waterloo/info/index.shtml",
     "email": null,
     "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20095:00\u202fPM, Sunday: 9:00\u202fAM\u2009\u2013\u20095:00\u202fPM",
-    "features": [],
+    "features": [
+      "water"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -11248,7 +11364,9 @@
     "website": "https://www.topofthemeadow.co.uk/",
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -11524,7 +11642,9 @@
     "website": "https://www.pencoedfachfarm.com/dog-walking-field",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u20097:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -11642,7 +11762,9 @@
     "website": "https://www.thedogpaddock.com/",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -11842,7 +11964,9 @@
     "website": "http://pamperedpetsgroomingandtraining.co.uk/",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 7:30\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 7:30\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 7:30\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 7:30\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 7:30\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 7:30\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -12361,7 +12485,9 @@
     "website": "https://www.ulsterwildlife.org/nature-reserves/bog-meadows",
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -12401,7 +12527,9 @@
     "website": "https://dogfieldleicester.uk/",
     "email": null,
     "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Sunday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -12481,7 +12609,9 @@
     "website": "https://www.bybrookcanine.com/?utm_source=google&utm_medium=wix_google_business_profile&utm_campaign=10724746840811889178",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -12521,7 +12651,9 @@
     "website": null,
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "agility_equipment"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -12841,7 +12973,9 @@
     "website": "https://dgswp-packington.as.me/schedule.php",
     "email": null,
     "opening_hours": "Monday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 6:00\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -12920,7 +13054,9 @@
     "website": "https://www.snibstonmeadow.co.uk/",
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -13000,7 +13136,9 @@
     "website": "http://southlodgemeadows.co.uk/",
     "email": null,
     "opening_hours": "Monday: 7:30\u202fAM\u2009\u2013\u20098:30\u202fPM, Tuesday: 7:30\u202fAM\u2009\u2013\u20098:30\u202fPM, Wednesday: 7:30\u202fAM\u2009\u2013\u20098:30\u202fPM, Thursday: 7:30\u202fAM\u2009\u2013\u20098:30\u202fPM, Friday: 7:30\u202fAM\u2009\u2013\u20098:30\u202fPM, Saturday: 7:30\u202fAM\u2009\u2013\u20098:30\u202fPM, Sunday: 9:00\u202fAM\u2009\u2013\u20098:30\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -13160,7 +13298,10 @@
     "website": "https://www.leicester.gov.uk/leisure-and-culture/parks-and-open-spaces/our-parks/aylestone-meadows",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "stream",
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -13280,7 +13421,9 @@
     "website": "http://www.leicester.gov.uk/parks",
     "email": null,
     "opening_hours": "Monday: Open 24 hours, Tuesday: Open 24 hours, Wednesday: Open 24 hours, Thursday: Open 24 hours, Friday: Open 24 hours, Saturday: Open 24 hours, Sunday: Open 24 hours",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -13400,7 +13543,9 @@
     "website": "https://staplefordestate.co.uk/stapleford-freedom-field",
     "email": null,
     "opening_hours": "Monday: 6:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Tuesday: 6:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Wednesday: 6:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Thursday: 6:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Friday: 6:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Saturday: 6:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Sunday: 6:00\u202fAM\u2009\u2013\u20097:00\u202fPM",
-    "features": [],
+    "features": [
+      "water"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -13560,7 +13705,9 @@
     "website": "https://wholetthedogsoutclub.co.uk/",
     "email": null,
     "opening_hours": "Monday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Tuesday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Wednesday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Thursday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Friday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Saturday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Sunday: 5:00\u202fAM\u2009\u2013\u200910:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -13840,7 +13987,9 @@
     "website": "https://www.fleursfriendlyfields.com/",
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u20098:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -13960,7 +14109,9 @@
     "website": "https://wholetthedogsoutclub.co.uk/",
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -14076,7 +14227,9 @@
     "website": "http://www.pawsomepasture.co.uk/",
     "email": null,
     "opening_hours": "Monday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Tuesday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Wednesday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Thursday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Friday: 6:00\u202fAM\u2009\u2013\u20097:00\u202fPM, Saturday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Sunday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM",
-    "features": [],
+    "features": [
+      "stream"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -14236,7 +14389,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "agility_equipment"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -14436,7 +14591,9 @@
     "website": null,
     "email": null,
     "opening_hours": "Monday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Tuesday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Wednesday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Thursday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Friday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Saturday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM, Sunday: 7:00\u202fAM\u2009\u2013\u200910:00\u202fPM",
-    "features": [],
+    "features": [
+      "wildflower_meadow"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -14988,7 +15145,9 @@
     "website": "https://www.facebook.com/woodlandwoofs1",
     "email": null,
     "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Sunday: 8:00\u202fAM\u2009\u2013\u20098:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -15188,7 +15347,9 @@
     "website": "https://offtheleashdogpark.co.uk/",
     "email": null,
     "opening_hours": "Monday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Tuesday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Wednesday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Thursday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Friday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Saturday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM, Sunday: 6:00\u202fAM\u2009\u2013\u20098:00\u202fPM",
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
@@ -15268,7 +15429,9 @@
     "website": null,
     "email": null,
     "opening_hours": null,
-    "features": [],
+    "features": [
+      "woodland"
+    ],
     "dog_size_allowed": [
       "small",
       "medium",
