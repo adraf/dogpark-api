@@ -487,7 +487,7 @@ class GooglePlacesScraper:
             self.DETAILS_URL,
             params={
                 "place_id": place_id,
-                "fields": "name,formatted_phone_number,website,opening_hours,photos,editorial_summary",
+                "fields": "name,formatted_phone_number,website,opening_hours,photos,editorial_summary,reviews,types",
                 "key": self.api_key,
             },
             timeout=15,
@@ -543,16 +543,22 @@ class GooglePlacesScraper:
             description = summary.get("overview", "")
 
             # Get up to 3 photo URLs — follow redirect to get clean CDN URL
-            photos = details.get("photos", [])[:3]
+            photos = details.get("photos", [])[:5]  # try up to 5 in case some fail
             for photo in photos:
+                if len(images) >= 3:
+                    break
                 ref = photo.get("photo_reference")
                 if ref:
                     url = self._resolve_photo_url(ref)
-                    if url:
+                    # Only keep clean CDN URLs — reject any that still contain the API key
+                    if url and "key=" not in url:
                         images.append(url)
 
         except Exception as e:
             log.debug(f"[GooglePlaces] Details fetch failed for {name}: {e}")
+
+        # Infer features from place types and review text
+        features = self._infer_features(r, details)
 
         return DogPark(
             id=_make_id(name, place_id),
@@ -570,9 +576,54 @@ class GooglePlacesScraper:
             website=website,
             opening_hours=opening,
             images=images,
+            features=features,
             source="google_places",
             source_url=f"https://maps.google.com/?cid={place_id}",
         )
+
+    def _infer_features(self, result: dict, details: dict) -> list:
+        """Infer features from Google place types, name, and review snippets."""
+        features = []
+        # Combine all text to search through
+        text = " ".join([
+            result.get("name", ""),
+            result.get("vicinity", ""),
+            details.get("editorial_summary", {}).get("overview", ""),
+            " ".join(r.get("text", "") for r in details.get("reviews", [])[:5]),
+        ]).lower()
+
+        types = result.get("types", [])
+
+        if any(t in types for t in ["parking", "car_park"]) or "parking" in text:
+            features.append("parking")
+        if "water" in text or "tap" in text or "hydrant" in text:
+            features.append("water")
+        if "agility" in text or "obstacle" in text or "equipment" in text:
+            features.append("agility_equipment")
+        if "light" in text or "flood" in text or "evening" in text:
+            features.append("lighting")
+        if "toilet" in text or "facilities" in text or "restroom" in text:
+            features.append("toilet_facilities")
+        if "shelter" in text or "cover" in text or "barn" in text:
+            features.append("shelter")
+        if "cafe" in text or "coffee" in text or "refreshment" in text:
+            features.append("cafe")
+        if "paddling" in text or "pool" in text or "splash" in text:
+            features.append("paddling_pool")
+        if "woodland" in text or "wood" in text or "forest" in text or "tree" in text:
+            features.append("woodland")
+        if "astroturf" in text or "artificial grass" in text or "all weather" in text:
+            features.append("astroturf")
+        if "small dog" in text or "separate" in text or "puppy" in text:
+            features.append("separate_small_dog_area")
+        if "stream" in text or "river" in text or "brook" in text:
+            features.append("stream")
+        if "indoor" in text or "barn" in text or "covered" in text:
+            features.append("indoor_area")
+        if "wildflower" in text or "meadow" in text or "flowers" in text:
+            features.append("wildflower_meadow")
+
+        return list(dict.fromkeys(features))  # deduplicate preserving order
 
 
 # ─────────────────────────────────────────────
