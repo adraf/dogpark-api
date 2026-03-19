@@ -63,7 +63,7 @@ pip install -r requirements.txt
 ### 2. Set up environment
 Create a `.env` file in the project root:
 ```
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/dogparks?appName=AppName
+MONGO_URI=your-mongodb-connection-string-here
 ```
 
 ### 3. Start the API
@@ -145,7 +145,7 @@ To redeploy, push to `main` and Vercel will auto-deploy.
 
 Required environment variable in Vercel:
 ```
-MONGO_URI = mongodb+srv://...
+MONGO_URI = your-mongodb-connection-string-here
 ```
 
 ---
