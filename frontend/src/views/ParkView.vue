@@ -67,9 +67,19 @@
                 <AppIcon name="people" :size="18" />
                 <div><div class="stat-val">{{ park.max_dogs }}</div><div class="stat-lbl">Max dogs / session</div></div>
               </div>
-              <div v-if="park.opening_hours" class="stat">
+              <div v-if="park.opening_hours" class="stat stat-hours">
                 <AppIcon name="clock" :size="18" />
-                <div><div class="stat-val small">{{ park.opening_hours }}</div><div class="stat-lbl">Opening hours</div></div>
+                <div>
+                  <div class="stat-lbl" style="margin-bottom:6px">Opening hours</div>
+                  <div
+                    v-for="(line, i) in openingHoursLines"
+                    :key="i"
+                    class="hours-line"
+                  >
+                    <span class="hours-day">{{ line.day }}</span>
+                    <span class="hours-time">{{ line.time }}</span>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -116,7 +126,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import L from 'leaflet'
 import { useParksStore } from '../stores/parks'
@@ -125,6 +135,21 @@ import { useFeatures } from '../composables/useFeatures'
 const route  = useRoute()
 const store  = useParksStore()
 const { label: featureLabel } = useFeatures()
+
+const openingHoursLines = computed(() => {
+  if (!park.value?.opening_hours) return []
+  // Handle both comma-separated and newline-separated formats
+  const raw = park.value.opening_hours
+  const lines = raw.includes('\n') ? raw.split('\n') : raw.split(', ')
+  return lines.map(line => {
+    const colon = line.indexOf(':')
+    if (colon === -1) return { day: line, time: '' }
+    return {
+      day:  line.slice(0, colon).trim(),
+      time: line.slice(colon + 1).trim(),
+    }
+  }).filter(l => l.day)
+})
 
 const park      = ref(null)
 const loading   = ref(true)
@@ -196,6 +221,15 @@ watch(() => route.params.id, async () => { await load(); setTimeout(initMap, 150
 .stat-val.free { color: #0e5c33; }
 .stat-val.small, .stat-val small { font-size: 13px; font-weight: 400; color: var(--text-muted); }
 .stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.stat-hours { align-items: flex-start; }
+.hours-line {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-size: 12px; padding: 3px 0;
+  border-bottom: 1px solid var(--border);
+}
+.hours-line:last-child { border-bottom: none; }
+.hours-day { color: var(--text); font-weight: 500; min-width: 90px; }
+.hours-time { color: var(--text-muted); text-align: right; }
 .features-grid { display: flex; flex-wrap: wrap; gap: 6px; }
 .feature-chip { display: flex; align-items: center; gap: 5px; font-size: 12px; padding: 5px 10px; border-radius: 10px; background: var(--tag-bg); color: var(--tag-text); }
 .contact-list { display: flex; flex-direction: column; gap: 4px; }
