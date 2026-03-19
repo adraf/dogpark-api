@@ -184,7 +184,7 @@ def list_parks(
     min_size_acres: Optional[float] = None,
     max_price_per_hour: Optional[float] = None,
     feature: Optional[list[str]] = Query(None),
-    sort: str = Query("rating", pattern="^(rating|price|size|name)$"),
+    sort: str = Query("rating", pattern="^(rating|name)$"),
     q_search: Optional[str] = None,
 ):
     col = get_col()
@@ -194,7 +194,8 @@ def list_parks(
         regex = {"$regex": q_search, "$options": "i"}
         query["$or"] = [
             {"name": regex}, {"description": regex},
-            {"town": regex}, {"county": regex}, {"postcode": regex},
+            {"town": regex}, {"county": regex},
+            {"postcode": regex}, {"address": regex},
         ]
     if county:
         query["county"] = {"$regex": county, "$options": "i"}
@@ -216,8 +217,6 @@ def list_parks(
 
     sort_field = {
         "rating": [("rating", DESCENDING)],
-        "price":  [("price_per_hour", ASCENDING)],
-        "size":   [("size_acres", DESCENDING)],
         "name":   [("name", ASCENDING)],
     }[sort]
 

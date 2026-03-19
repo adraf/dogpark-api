@@ -29,22 +29,17 @@ export const useParksStore = defineStore('parks', () => {
   const filters = ref({
     search:   '',
     features: [],
-    enclosed: false,
-    free:     false,
     county:   null,
-    maxPrice: 30,
-    minSize:  0,
     sort:     'rating',
   })
-
   function setFilter(key, value) {
     filters.value[key] = value
-    page.value = 1  // reset to page 1 on filter change
+    page.value = 1
     fetchPage()
   }
 
   function resetFilters() {
-    filters.value = { search: '', features: [], enclosed: false, free: false, county: null, maxPrice: 30, minSize: 0, sort: 'rating' }
+    filters.value = { search: '', features: [], county: null, sort: 'rating' }
     page.value = 1
     fetchPage()
   }
@@ -57,11 +52,7 @@ export const useParksStore = defineStore('parks', () => {
     params.set('per_page', perPage)
     if (f.search)   params.set('q_search', f.search)
     if (f.county)   params.set('county', f.county)
-    if (f.enclosed) params.set('is_fully_enclosed', 'true')
-    if (f.free)     params.set('is_free', 'true')
     if (f.features.length) f.features.forEach(feat => params.append('feature', feat))
-    if (f.maxPrice < 30) params.set('max_price_per_hour', f.maxPrice)
-    if (f.minSize > 0)   params.set('min_size_acres', f.minSize)
     params.set('sort', f.sort)
     return params
   }
@@ -139,9 +130,7 @@ export const useParksStore = defineStore('parks', () => {
 
   const hasActiveFilters = computed(() => {
     const f = filters.value
-    return f.search || f.county || f.enclosed || f.free ||
-           (f.features && f.features.length > 0) ||
-           f.maxPrice < 30 || f.minSize > 0
+    return f.search || f.county || (f.features && f.features.length > 0)
   })
 
   // ── Init ──────────────────────────────────────────────

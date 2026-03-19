@@ -74,10 +74,8 @@ const view  = ref('list')
 const sort  = ref('rating')
 
 const sortOptions = [
-  { label: 'Top rated',     value: 'rating' },
-  { label: 'Lowest price',  value: 'price'  },
-  { label: 'Largest first', value: 'size'   },
-  { label: 'A–Z',           value: 'name'   },
+  { label: 'Top rated', value: 'rating' },
+  { label: 'A–Z',       value: 'name'   },
 ]
 
 const mapParks = ref([])
