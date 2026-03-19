@@ -1,7 +1,8 @@
 <template>
   <div class="park-card" @click="$router.push(`/park/${park.id}`)">
-    <div class="card-img" :style="park.images && park.images.length ? `background-image:url(${park.images[0]});background-size:cover;background-position:center` : ''">
-      <div v-if="!park.images || !park.images.length" class="card-img-pattern" />
+    <div class="card-img">
+      <img v-if="park.images && park.images.length" :src="park.images[0]" class="card-photo" alt="" />
+      <div v-else class="card-img-pattern" />
       <button
         class="fav-btn" :class="{ active: store.isFavourite(park.id) }"
         @click.stop="store.toggleFavourite(park.id)"
@@ -68,6 +69,17 @@ const store = useParksStore()
   height: 96px;
   background: linear-gradient(135deg, #1a4a35 0%, #237a56 55%, #3aaa75 100%);
   position: relative; display: flex; align-items: flex-end; padding: 8px 10px;
+  overflow: hidden;
+}
+.card-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center; z-index: 0;
+}
+.card-img::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.05) 60%);
+  pointer-events: none;
 }
 .card-img-pattern {
   position: absolute; inset: 0; opacity: 0.1;
@@ -78,7 +90,7 @@ const store = useParksStore()
   background-size: 40px 40px;
 }
 .fav-btn {
-  position: absolute; top: 8px; right: 8px; z-index: 2;
+  position: absolute; top: 8px; right: 8px; z-index: 3;
   background: rgba(255,255,255,0.92); border: none; border-radius: 50%;
   width: 30px; height: 30px; display: flex; align-items: center;
   justify-content: center; cursor: pointer; transition: all 0.15s;
@@ -88,7 +100,7 @@ const store = useParksStore()
 .card-badge {
   background: rgba(255,255,255,0.92); color: var(--forest);
   font-size: 10px; font-weight: 600; padding: 3px 8px;
-  border-radius: 8px; position: relative; z-index: 1;
+  border-radius: 8px; position: relative; z-index: 2;
   display: flex; align-items: center; gap: 4px;
 }
 .card-body { padding: 11px 12px; }
