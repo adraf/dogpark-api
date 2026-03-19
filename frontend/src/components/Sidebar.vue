@@ -11,6 +11,9 @@
           placeholder="Search parks..."
           @input="store.setFilter('search', searchTerm)"
         />
+        <button v-if="searchTerm" class="msearch-clear" @click="clearMobileSearch">
+          <AppIcon name="close" :size="13" />
+        </button>
       </div>
       <button class="close-btn" @click="$emit('close')">
         <AppIcon name="close" :size="18" />
@@ -45,55 +48,6 @@
       </button>
     </section>
 
-    <!-- Enclosed / Free toggles -->
-    <section class="section">
-      <h3 class="section-label">Type</h3>
-      <label class="feature-check" :class="{ active: store.filters.enclosed }">
-        <input type="checkbox" :checked="store.filters.enclosed" @change="store.setFilter('enclosed', !store.filters.enclosed)" />
-        <AppIcon name="lock" :size="15" />
-        <span class="fc-label">Fully enclosed</span>
-        <span class="count">{{ enclosedCount }}</span>
-      </label>
-      <label class="feature-check" :class="{ active: store.filters.free }">
-        <input type="checkbox" :checked="store.filters.free" @change="store.setFilter('free', !store.filters.free)" />
-        <AppIcon name="check-mark" :size="15" />
-        <span class="fc-label">Free entry</span>
-        <span class="count">{{ freeCount }}</span>
-      </label>
-    </section>
-
-    <!-- Price slider -->
-    <section class="section">
-      <h3 class="section-label">Max price / hour</h3>
-      <div class="slider-wrap">
-        <div class="slider-labels">
-          <span>Free</span>
-          <span class="slider-val">{{ priceLabel }}</span>
-        </div>
-        <input type="range" min="0" max="30" step="1"
-          :value="store.filters.maxPrice"
-          @input="e => { store.setFilter('maxPrice', +e.target.value); updateTrack(e.target) }"
-          ref="priceSlider"
-        />
-      </div>
-    </section>
-
-    <!-- Size slider -->
-    <section class="section">
-      <h3 class="section-label">Minimum size (acres)</h3>
-      <div class="slider-wrap">
-        <div class="slider-labels">
-          <span>Any</span>
-          <span class="slider-val">{{ sizeLabel }}</span>
-        </div>
-        <input type="range" min="0" max="6" step="0.5"
-          :value="store.filters.minSize"
-          @input="e => { store.setFilter('minSize', +e.target.value); updateTrack(e.target) }"
-          ref="sizeSlider"
-        />
-      </div>
-    </section>
-
     <!-- County (unified scrollable list) -->
     <section class="section">
       <h3 class="section-label">County</h3>
@@ -101,6 +55,9 @@
       <div class="county-search">
         <AppIcon name="search" :size="13" class="csearch-icon" />
         <input v-model="countySearch" type="text" placeholder="Search counties..." />
+        <button v-if="countySearch" class="csearch-clear" @click="countySearch = ''">
+          <AppIcon name="close" :size="12" />
+        </button>
       </div>
 
       <div class="county-list" :class="{ expanded: countyExpanded || countySearch }">
@@ -132,7 +89,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useParksStore } from '../stores/parks'
 import { FEATURE_LABELS } from '../composables/useFeatures'
 
@@ -143,13 +100,14 @@ const store = useParksStore()
 const searchTerm = ref(store.filters.search)
 watch(() => store.filters.search, v => { searchTerm.value = v })
 
-const priceSlider      = ref(null)
-const sizeSlider       = ref(null)
+function clearMobileSearch() {
+  searchTerm.value = ''
+  store.setFilter('search', '')
+}
 const featuresExpanded = ref(false)
 const countyExpanded   = ref(false)
 const TOP_N = 5
 
-// Derive all features present in the data, sorted by count
 const allFeatureFilters = computed(() => {
   const counts = {}
   store.allParks.forEach(p => (p.features || []).forEach(f => {
@@ -160,19 +118,17 @@ const allFeatureFilters = computed(() => {
     .sort((a, b) => b.count - a.count)
 })
 
-const enclosedCount = computed(() => store.allParks.filter(p => p.is_fully_enclosed).length)
-const freeCount     = computed(() => store.allParks.filter(p => p.is_free).length)
-const countySearch   = ref('')
-const sortedCounties  = computed(() => [...store.counties].sort((a, b) => a.county.localeCompare(b.county)))
+const countySearch     = ref('')
+const sortedCounties   = computed(() => [...store.counties].sort((a, b) => a.county.localeCompare(b.county)))
+
+// Clear county search when county filter is cleared (e.g. via Clear Filters button)
+watch(() => store.filters.county, v => { if (!v) countySearch.value = '' })
 const filteredCounties = computed(() => {
   const all = countySearch.value
     ? sortedCounties.value.filter(c => c.county.toLowerCase().includes(countySearch.value.toLowerCase()))
     : sortedCounties.value
   return countyExpanded.value || countySearch.value ? all : all.slice(0, TOP_N)
 })
-
-const priceLabel = computed(() => store.filters.maxPrice >= 30 ? 'All' : `£${store.filters.maxPrice}/hr`)
-const sizeLabel  = computed(() => store.filters.minSize  === 0  ? 'Any' : `${store.filters.minSize}+ acres`)
 
 function toggleFeature(key) {
   const current = store.filters.features || []
@@ -185,16 +141,6 @@ function toggleFeature(key) {
 function toggleCounty(c) {
   store.setFilter('county', store.filters.county === c ? null : c)
 }
-
-function updateTrack(el) {
-  const pct = ((el.value - el.min) / (el.max - el.min) * 100).toFixed(1) + '%'
-  el.style.setProperty('--pct', pct)
-}
-
-onMounted(() => {
-  if (priceSlider.value) updateTrack(priceSlider.value)
-  if (sizeSlider.value)  updateTrack(sizeSlider.value)
-})
 </script>
 
 <style scoped>
@@ -261,6 +207,20 @@ onMounted(() => {
   background: var(--parchment);
 }
 .county-search input:focus { border-color: var(--forest-mid); background: white; }
+.csearch-clear {
+  position: absolute; right: 6px;
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; padding: 2px;
+  border-radius: 50%; opacity: 0.4; transition: opacity 0.15s;
+}
+.csearch-clear:hover { opacity: 0.8; }
+.msearch-clear {
+  position: absolute; right: 8px;
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; padding: 2px;
+  border-radius: 50%; opacity: 0.4; transition: opacity 0.15s;
+}
+.msearch-clear:hover { opacity: 0.8; }
 .county-empty { font-size: 12px; color: var(--text-muted); padding: 6px 10px; }
 
 /* County list — unified, scrolls as one */

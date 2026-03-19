@@ -19,6 +19,9 @@
         placeholder="Search by name, town, or county..."
         @input="store.setFilter('search', searchTerm)"
       />
+      <button v-if="searchTerm" class="search-clear" @click="clearSearch">
+        <AppIcon name="close" :size="14" />
+      </button>
     </div>
 
     <nav class="nav-tabs">
@@ -48,6 +51,11 @@ const store      = useParksStore()
 const searchTerm = ref(store.filters.search)
 
 watch(() => store.filters.search, v => { searchTerm.value = v })
+
+function clearSearch() {
+  searchTerm.value = ''
+  store.setFilter('search', '')
+}
 </script>
 
 <style scoped>
@@ -90,6 +98,14 @@ watch(() => store.filters.search, v => { searchTerm.value = v })
 }
 .search-wrap input::placeholder { color: rgba(255,255,255,0.45); }
 .search-wrap input:focus { background: rgba(255,255,255,0.22); }
+.search-clear {
+  position: absolute; right: 10px;
+  background: none; border: none; cursor: pointer;
+  display: flex; align-items: center; padding: 2px;
+  border-radius: 50%; opacity: 0.6; transition: opacity 0.15s;
+}
+.search-clear:hover { opacity: 1; }
+.search-clear :deep(.app-icon) { filter: brightness(0) invert(1); }
 
 .nav-tabs { display: flex; gap: 4px; margin-left: auto; }
 .nav-tab {
