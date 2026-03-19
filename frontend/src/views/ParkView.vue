@@ -22,12 +22,6 @@
         <div class="hero-pattern" />
         <div class="hero-body">
           <div class="hero-badges">
-            <span v-if="park.is_fully_enclosed" class="badge">
-              <AppIcon name="lock" :size="12" /> Fully enclosed
-            </span>
-            <span v-if="park.is_free" class="badge free">
-              <AppIcon name="check-mark" :size="12" /> Free entry
-            </span>
           </div>
           <h1 class="hero-name">{{ park.name }}</h1>
           <div class="hero-loc">
@@ -54,15 +48,6 @@
               <div v-if="park.size_acres" class="stat">
                 <AppIcon name="expand" :size="18" />
                 <div><div class="stat-val">{{ park.size_acres }} acres</div><div class="stat-lbl">Size</div></div>
-              </div>
-              <div v-if="park.price_per_hour || park.is_free" class="stat">
-                <AppIcon name="price-tag" :size="18" />
-                <div>
-                  <div class="stat-val" :class="{ free: park.is_free }">
-                    {{ park.is_free ? 'Free' : `£${park.price_per_hour}/hr` }}
-                  </div>
-                  <div class="stat-lbl">Price</div>
-                </div>
               </div>
               <div v-if="park.fence_height_m" class="stat">
                 <AppIcon name="front-door" :size="18" />

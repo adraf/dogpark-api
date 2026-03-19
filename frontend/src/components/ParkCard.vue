@@ -10,9 +10,6 @@
       >
         <AppIcon :name="store.isFavourite(park.id) ? 'heart-1' : 'heart'" :size="16" />
       </button>
-      <span v-if="park.is_fully_enclosed" class="card-badge">
-        <AppIcon name="lock" :size="12" /> Fully enclosed
-      </span>
     </div>
 
     <div class="card-body">
@@ -23,8 +20,7 @@
       </div>
 
       <div class="card-meta">
-        <span v-if="park.is_free" class="pill free">Free</span>
-        <span v-else-if="park.price_per_hour" class="pill price">£{{ park.price_per_hour }}/hr</span>
+        <span v-if="park.price_per_hour" class="pill price">£{{ park.price_per_hour }}/hr</span>
         <span v-if="park.size_acres" class="pill size">{{ park.size_acres }} acres</span>
         <span v-if="park.fence_height_m" class="pill">{{ park.fence_height_m }}m fence</span>
       </div>
