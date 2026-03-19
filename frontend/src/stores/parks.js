@@ -2,16 +2,19 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
 const API = import.meta.env.DEV ? '/api' : ''
+const PER_PAGE = 21
 
 export const useParksStore = defineStore('parks', () => {
-  // ── Raw data ──────────────────────────────────────────
-  const allParks   = ref([])
+  // ── Data ──────────────────────────────────────────────
+  const parks      = ref([])   // current page results
+  const total      = ref(0)    // total matching parks
+  const allParks   = ref([])   // all parks for map view + filters
   const counties   = ref([])
-  const stats      = ref(null)
   const loading    = ref(false)
   const error      = ref(null)
+  const page       = ref(1)
 
-  // ── Favourites (persisted) ────────────────────────────
+  // ── Favourites ────────────────────────────────────────
   const favourites = ref(new Set(JSON.parse(localStorage.getItem('safepaws_favs') || '[]')))
 
   function toggleFavourite(id) {
@@ -20,14 +23,12 @@ export const useParksStore = defineStore('parks', () => {
     localStorage.setItem('safepaws_favs', JSON.stringify([...favourites.value]))
   }
 
-  function isFavourite(id) {
-    return favourites.value.has(id)
-  }
+  function isFavourite(id) { return favourites.value.has(id) }
 
   // ── Filters ───────────────────────────────────────────
   const filters = ref({
     search:   '',
-    features: [],    // array of feature keys (AND logic)
+    features: [],
     enclosed: false,
     free:     false,
     county:   null,
@@ -38,89 +39,87 @@ export const useParksStore = defineStore('parks', () => {
 
   function setFilter(key, value) {
     filters.value[key] = value
+    page.value = 1  // reset to page 1 on filter change
+    fetchPage()
   }
 
   function resetFilters() {
     filters.value = { search: '', features: [], enclosed: false, free: false, county: null, maxPrice: 30, minSize: 0, sort: 'rating' }
+    page.value = 1
+    fetchPage()
   }
 
-  // ── Derived ───────────────────────────────────────────
-  const filteredParks = computed(() => {
-    let result = allParks.value.filter(p => {
-      const f = filters.value
-      if (f.search) {
-        const t = f.search.toLowerCase()
-        if (!p.name.toLowerCase().includes(t) &&
-            !p.town.toLowerCase().includes(t) &&
-            !p.county.toLowerCase().includes(t) &&
-            !(p.postcode || '').toLowerCase().includes(t)) return false
-      }
-      if (f.county   && p.county !== f.county)  return false
-      if (f.enclosed && !p.is_fully_enclosed)    return false
-      if (f.free     && !p.is_free)              return false
-      if (f.features.length && !f.features.every(feat => (p.features || []).includes(feat))) return false
-      if (f.maxPrice < 30 && !p.is_free && (p.price_per_hour || 999) > f.maxPrice) return false
-      if (f.minSize  > 0  && (p.size_acres || 0) < f.minSize) return false
-      return true
-    })
+  // ── Build query params ────────────────────────────────
+  function buildParams(pageNum = 1, perPage = PER_PAGE) {
+    const f = filters.value
+    const params = new URLSearchParams()
+    params.set('page', pageNum)
+    params.set('per_page', perPage)
+    if (f.search)   params.set('q_search', f.search)
+    if (f.county)   params.set('county', f.county)
+    if (f.enclosed) params.set('is_fully_enclosed', 'true')
+    if (f.free)     params.set('is_free', 'true')
+    if (f.features.length) f.features.forEach(feat => params.append('feature', feat))
+    if (f.maxPrice < 30) params.set('max_price_per_hour', f.maxPrice)
+    if (f.minSize > 0)   params.set('min_size_acres', f.minSize)
+    params.set('sort', f.sort)
+    return params
+  }
 
-    const s = filters.value.sort
-    result.sort((a, b) => {
-      if (s === 'rating') {
-        // Weighted score: rating * log(review_count + 1) so volume matters
-        const scoreA = (a.rating || 0) * Math.log((a.review_count || 0) + 1)
-        const scoreB = (b.rating || 0) * Math.log((b.review_count || 0) + 1)
-        return scoreB - scoreA
-      }
-      if (s === 'price')  return (a.price_per_hour || 999) - (b.price_per_hour || 999)
-      if (s === 'size')   return (b.size_acres || 0) - (a.size_acres || 0)
-      return a.name.localeCompare(b.name)
-    })
-    return result
-  })
-
-  const favouriteParks = computed(() =>
-    allParks.value.filter(p => favourites.value.has(p.id))
-  )
-
-  const countByFeature = computed(() => {
-    const counts = {}
-    allParks.value.forEach(p => (p.features || []).forEach(f => {
-      counts[f] = (counts[f] || 0) + 1
-    }))
-    return counts
-  })
-
-  // ── Fetch ─────────────────────────────────────────────
-  async function fetchAll(retries = 3) {
+  // ── Fetch current page ────────────────────────────────
+  async function fetchPage(pageNum = page.value, retries = 3) {
     loading.value = true
     error.value   = null
     for (let i = 0; i < retries; i++) {
       try {
-        const res  = await fetch(`${API}/parks?per_page=500`)
+        const params = buildParams(pageNum)
+        const res    = await fetch(`${API}/parks?${params}`)
         if (!res.ok) throw new Error(`API error ${res.status}`)
-        const data = await res.json()
-        allParks.value = data.results
-        loading.value  = false
+        const data   = await res.json()
+        parks.value  = data.results
+        total.value  = data.total
+        page.value   = pageNum
+        loading.value = false
         return
       } catch (e) {
-        if (i < retries - 1) {
-          await new Promise(r => setTimeout(r, 1500)) // wait 1.5s between retries
-        } else {
-          error.value = e.message
-        }
+        if (i < retries - 1) await new Promise(r => setTimeout(r, 1500))
+        else error.value = e.message
       }
     }
     loading.value = false
   }
 
+  function goToPage(p) { fetchPage(p) }
+
+  // ── Fetch ALL for map view (no pagination) ────────────
+  async function fetchAll() {
+    try {
+      const params = buildParams(1, 2000)
+      const res    = await fetch(`${API}/parks?${params}`)
+      if (!res.ok) return
+      const data   = await res.json()
+      allParks.value = data.results
+      // If more pages, fetch them
+      for (let p = 2; p <= data.pages; p++) {
+        const r = await fetch(`${API}/parks?${buildParams(p, 2000)}`)
+        if (r.ok) {
+          const d = await r.json()
+          allParks.value = [...allParks.value, ...d.results]
+        }
+      }
+    } catch (e) {
+      console.error('fetchAll error', e)
+    }
+  }
+
+  // ── Fetch single park ─────────────────────────────────
   async function fetchPark(id) {
     try {
       const res = await fetch(`${API}/parks/${id}`)
       if (!res.ok) throw new Error()
       return await res.json()
     } catch {
-      return allParks.value.find(p => p.id === id) || null
+      return parks.value.find(p => p.id === id) || allParks.value.find(p => p.id === id) || null
     }
   }
 
@@ -131,24 +130,33 @@ export const useParksStore = defineStore('parks', () => {
     } catch {}
   }
 
-  async function fetchStats() {
-    try {
-      const res = await fetch(`${API}/stats`)
-      stats.value = await res.json()
-    } catch {}
-  }
+  // ── Derived ───────────────────────────────────────────
+  const totalPages = computed(() => Math.ceil(total.value / PER_PAGE))
 
+  const favouriteParks = computed(() =>
+    allParks.value.filter(p => favourites.value.has(p.id))
+  )
+
+  const hasActiveFilters = computed(() => {
+    const f = filters.value
+    return f.search || f.county || f.enclosed || f.free ||
+           (f.features && f.features.length > 0) ||
+           f.maxPrice < 30 || f.minSize > 0
+  })
+
+  // ── Init ──────────────────────────────────────────────
   function init() {
-    fetchAll()
+    fetchPage(1)
     fetchCounties()
-    fetchStats()
+    fetchAll() // background fetch for sidebar counts and map
   }
 
   return {
-    allParks, counties, stats, loading, error,
+    parks, total, allParks, counties, loading, error, page, totalPages,
     favourites, toggleFavourite, isFavourite,
-    filters, setFilter, resetFilters,
-    filteredParks, favouriteParks, countByFeature,
-    fetchAll, fetchPark, fetchCounties, fetchStats, init,
+    filters, setFilter, resetFilters, hasActiveFilters,
+    fetchPage, goToPage, fetchAll, fetchPark, fetchCounties, init,
+    favouriteParks,
+    PER_PAGE,
   }
 })

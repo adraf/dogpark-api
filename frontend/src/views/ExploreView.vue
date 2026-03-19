@@ -2,7 +2,7 @@
   <div class="explore">
     <div class="toolbar">
       <span class="result-count">
-        <strong>{{ store.filteredParks.length }}</strong> parks found
+        <strong>{{ store.total }}</strong> parks found
       </span>
       <PvSelect
         v-model="sort" :options="sortOptions"
@@ -10,17 +10,16 @@
         class="sort-select" @change="store.setFilter('sort', sort)"
       />
       <Transition name="fade">
-        <button v-if="hasActiveFilters" class="clear-btn" @click="store.resetFilters()">
+        <button v-if="store.hasActiveFilters" class="clear-btn" @click="store.resetFilters()">
           <AppIcon name="clear-filters" :size="14" />
           <span>Clear filters</span>
         </button>
       </Transition>
-
       <div class="view-toggle">
-        <button class="view-btn" :class="{ active: view === 'list' }" @click="view = 'list'">
+        <button class="view-btn" :class="{ active: view === 'list' }" @click="switchView('list')">
           <AppIcon name="list" :size="15" /> List
         </button>
-        <button class="view-btn" :class="{ active: view === 'map' }" @click="view = 'map'">
+        <button class="view-btn" :class="{ active: view === 'map' }" @click="switchView('map')">
           <AppIcon name="map" :size="15" /> Map
         </button>
       </div>
@@ -34,13 +33,11 @@
     <div v-else-if="store.error" class="error-banner">
       <AppIcon name="error" :size="18" />
       Cannot connect to the API. Make sure uvicorn is running on port 8000.
-      <PvButton label="Retry" size="small" @click="store.fetchAll()" style="margin-left:8px">
-        <template #icon><AppIcon name="reboot" :size="14" /></template>
-      </PvButton>
+      <PvButton label="Retry" size="small" @click="store.fetchPage()" style="margin-left:8px" />
     </div>
 
     <div v-else-if="view === 'list'" class="list-content">
-      <div v-if="store.filteredParks.length === 0" class="empty">
+      <div v-if="store.parks.length === 0" class="empty">
         <AppIcon name="zoom-out" :size="44" />
         <p>No parks match your filters</p>
         <PvButton label="Clear filters" size="small" outlined @click="store.resetFilters()">
@@ -49,33 +46,32 @@
       </div>
       <template v-else>
         <div class="parks-grid">
-          <ParkCard v-for="park in paginated" :key="park.id" :park="park" />
+          <ParkCard v-for="park in store.parks" :key="park.id" :park="park" />
         </div>
         <PvPaginator
-          v-if="store.filteredParks.length > perPage"
-          :rows="perPage" :totalRecords="store.filteredParks.length"
-          :first="(page - 1) * perPage"
-          @page="e => page = e.page + 1"
+          v-if="store.totalPages > 1"
+          :rows="store.PER_PAGE"
+          :totalRecords="store.total"
+          :first="(store.page - 1) * store.PER_PAGE"
+          @page="e => store.goToPage(e.page + 1)"
           class="paginator"
         />
       </template>
     </div>
 
-    <ParkMap v-else :parks="store.filteredParks" class="map-view" />
+    <ParkMap v-else :parks="mapParks" class="map-view" />
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import ParkCard from '../components/ParkCard.vue'
 import ParkMap from '../components/ParkMap.vue'
 import { useParksStore } from '../stores/parks'
 
-const store   = useParksStore()
-const view    = ref('list')
-const sort    = ref('rating')
-const page    = ref(1)
-const perPage = 21
+const store = useParksStore()
+const view  = ref('list')
+const sort  = ref('rating')
 
 const sortOptions = [
   { label: 'Top rated',     value: 'rating' },
@@ -84,17 +80,18 @@ const sortOptions = [
   { label: 'A–Z',           value: 'name'   },
 ]
 
-const hasActiveFilters = computed(() => {
-  const f = store.filters
-  return f.search || f.county || f.enclosed || f.free ||
-         (f.features && f.features.length > 0) ||
-         f.maxPrice < 30 || f.minSize > 0
-})
+const mapParks = ref([])
 
-const paginated = computed(() => {
-  const start = (page.value - 1) * perPage
-  return store.filteredParks.slice(start, start + perPage)
-})
+async function switchView(v) {
+  view.value = v
+  if (v === 'map' && mapParks.value.length === 0) {
+    await store.fetchAll()
+    mapParks.value = store.allParks
+  }
+}
+
+// Keep mapParks in sync when filters change and map is open
+watch(() => store.allParks, (v) => { if (view.value === 'map') mapParks.value = v })
 </script>
 
 <style scoped>
@@ -108,29 +105,28 @@ const paginated = computed(() => {
 .sort-select { font-size: 13px; min-width: 150px; height: 34px; }
 :deep(.p-select) { height: 34px; font-size: 13px; }
 :deep(.p-select-label) { font-size: 13px; padding-top: 0; padding-bottom: 0; display: flex; align-items: center; }
+
 .clear-btn {
   display: flex; align-items: center; gap: 6px;
   height: 34px; padding: 0 12px; border-radius: 7px;
-  border: 1.5px solid #f0b429;
-  background: #fff9e6; color: #7a5500;
+  border: 1.5px solid #f0b429; background: #fff9e6; color: #7a5500;
   font-size: 13px; font-weight: 500; cursor: pointer;
   transition: all 0.15s; white-space: nowrap;
 }
 .clear-btn:hover { background: #ffefc0; border-color: #c9920a; }
-
 .fade-enter-active, .fade-leave-active { transition: opacity 0.2s, transform 0.2s; }
 .fade-enter-from, .fade-leave-to { opacity: 0; transform: scale(0.92); }
 
 .view-toggle { display: flex; gap: 6px; margin-left: auto; }
 .view-btn {
   display: flex; align-items: center; gap: 6px; padding: 0 16px;
-  height: 34px; border-radius: 7px;
-  border: 1.5px solid #c8d4cc; background: white;
+  height: 34px; border-radius: 7px; border: 1.5px solid #c8d4cc; background: white;
   font-size: 13px; font-weight: 500; color: var(--text-muted); cursor: pointer; transition: all 0.15s;
 }
 .view-btn:hover:not(.active) { border-color: var(--forest-mid); color: var(--text); }
 .view-btn.active { background: var(--forest-mid); border-color: var(--forest-mid); color: white; font-weight: 600; }
 .view-btn.active :deep(.app-icon) { filter: brightness(0) invert(1); }
+
 .loading { display: flex; align-items: center; justify-content: center; gap: 12px; flex: 1; font-size: 14px; color: var(--text-muted); }
 .error-banner {
   margin: 16px; padding: 14px 16px; background: #fff3cd; border: 1px solid #ffc107;

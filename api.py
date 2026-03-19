@@ -128,6 +128,7 @@ class DogParkSummary(BaseModel):
     rating: Optional[float] = None
     review_count: int = 0
     features: list = []
+    images: list = []
     distance_km: Optional[float] = None
 
 
@@ -175,7 +176,7 @@ def root():
 @app.get("/parks", response_model=PaginatedParks, tags=["parks"])
 def list_parks(
     page: int = Query(1, ge=1),
-    per_page: int = Query(20, ge=1, le=500),
+    per_page: int = Query(20, ge=1, le=2000),
     county: Optional[str] = None,
     town: Optional[str] = None,
     is_free: Optional[bool] = None,
@@ -184,10 +185,17 @@ def list_parks(
     max_price_per_hour: Optional[float] = None,
     feature: Optional[list[str]] = Query(None),
     sort: str = Query("rating", pattern="^(rating|price|size|name)$"),
+    q_search: Optional[str] = None,
 ):
     col = get_col()
     query: dict = {}
 
+    if q_search:
+        regex = {"$regex": q_search, "$options": "i"}
+        query["$or"] = [
+            {"name": regex}, {"description": regex},
+            {"town": regex}, {"county": regex}, {"postcode": regex},
+        ]
     if county:
         query["county"] = {"$regex": county, "$options": "i"}
     if town:
