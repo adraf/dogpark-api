@@ -1,6 +1,22 @@
-# 🐾 UK Secure Dog Parks API
+# 🐾 SafePaws UK - Secure Dog Parks Finder
 
-A FastAPI backend + web scraper that builds a comprehensive database of **secure, enclosed dog parks** across the UK, ready to power a full dog park finder application.
+A full-stack web app for finding secure, enclosed dog parks across the UK. Built with **FastAPI** and **MongoDB Atlas** on the backend and **Vue 3** on the frontend, deployed on **Vercel**.
+
+Live site: [dogpark-api.vercel.app](https://dogpark-api.vercel.app)
+
+---
+
+## Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Vue 3, Vite, Pinia, Vue Router, PrimeVue, Leaflet |
+| Backend | FastAPI (Python) |
+| Database | MongoDB Atlas (free tier) |
+| Hosting | Vercel |
+| Icons | icons8 |
+| Maps | OpenStreetMap via Leaflet |
+| Data | Google Places API |
 
 ---
 
@@ -8,52 +24,61 @@ A FastAPI backend + web scraper that builds a comprehensive database of **secure
 
 ```
 dogpark-api/
-├── api.py               ← FastAPI backend (run this)
+├── api.py                  <- FastAPI backend
 ├── requirements.txt
+├── vercel.json             <- Vercel deployment config
+├── fix_parks.py            <- Data cleaning script
+├── fix_counties.py         <- County normalisation script
 ├── scraper/
-│   └── scraper.py       ← Web scraper (run to populate data)
-└── data/
-    ├── parks.json        ← Scraped / seed data
-    └── parks.db          ← SQLite database (auto-generated)
+│   └── scraper.py          <- Google Places scraper
+├── data/
+│   └── parks.json          <- Park data (source of truth)
+└── frontend/
+    ├── src/
+    │   ├── components/     <- AppIcon, FeatureIcon, ParkCard, ParkMap, Sidebar, TopBar
+    │   ├── views/          <- ExploreView, FavouritesView, ParkView
+    │   ├── stores/         <- Pinia store (parks.js)
+    │   ├── composables/    <- useFeatures.js
+    │   └── router/         <- Vue Router
+    └── dist/               <- Built frontend (committed for Vercel)
 ```
 
 ---
 
-## Quick Start
+## Local Development
 
-### 1. Install dependencies
+### Prerequisites
+- Python 3.9+
+- Node.js 18+
+- MongoDB Atlas account (free tier)
+
+### 1. Clone and install backend dependencies
 ```bash
+git clone https://github.com/adraf/dogpark-api.git
+cd dogpark-api
+python -m venv venv && source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. (Optional) Run the scraper to gather fresh data
-```bash
-# Scrape all sources
-python scraper/scraper.py
-
-# Scrape a specific source
-python scraper/scraper.py --source sniffspot
-python scraper/scraper.py --source dwf       # dogwalkingfields.co.uk
-python scraper/scraper.py --source paddocks  # paddocksforpooches.co.uk
-
-# With Google Places API (optional, for much better coverage)
-python scraper/scraper.py --google-api-key YOUR_KEY_HERE
-
-# Skip geocoding (faster, no coordinates)
-python scraper/scraper.py --no-geocode
+### 2. Set up environment
+Create a `.env` file in the project root:
+```
+MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/dogparks?appName=AppName
 ```
 
-> The scraper automatically:
-> - Deduplicates parks across sources
-> - Geocodes postcodes via postcodes.io (free)
-> - Saves to both `data/parks.json` and `data/parks.db`
-
-### 3. Start the API server
+### 3. Start the API
 ```bash
 uvicorn api:app --reload --port 8000
 ```
 
-Open **http://localhost:8000/docs** for the interactive API documentation.
+### 4. Install and run the frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend runs at **http://localhost:5173** and the API at **http://localhost:8000**.
 
 ---
 
@@ -62,90 +87,83 @@ Open **http://localhost:8000/docs** for the interactive API documentation.
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/parks` | List parks (paginated, filterable) |
-| GET | `/parks/{id}` | Get a single park by ID |
-| GET | `/parks/search?q=...` | Full-text search |
-| GET | `/parks/nearby?lat=...&lng=...` | Parks within radius |
+| GET | `/parks/{id}` | Single park detail |
+| GET | `/parks/nearby` | Parks within radius of lat/lng |
 | GET | `/counties` | All counties with park counts |
 | GET | `/towns` | All towns with park counts |
 | GET | `/features` | All feature tags with counts |
 | GET | `/stats` | Database statistics |
-| POST | `/admin/reload` | Re-seed DB from parks.json |
+| POST | `/admin/reload` | Re-seed MongoDB from parks.json |
 
 ### Filter Parameters (GET /parks)
 
 | Param | Type | Description |
 |-------|------|-------------|
-| `county` | string | Filter by county (partial match) |
-| `town` | string | Filter by town (partial match) |
-| `is_free` | bool | Show only free parks |
-| `is_fully_enclosed` | bool | Show only fully enclosed parks |
-| `min_size_acres` | float | Minimum field size |
-| `max_price_per_hour` | float | Maximum price per hour |
-| `feature` | string (multi) | Required features (AND logic) |
-| `sort` | string | Sort by: rating, price, size, name |
+| `q_search` | string | Full-text search (name, town, county, address) |
+| `county` | string | Filter by county |
+| `feature` | string (multi) | Required features, AND logic |
+| `sort` | string | `rating` or `name` |
 | `page` | int | Page number |
-| `per_page` | int | Results per page (max 100) |
+| `per_page` | int | Results per page (max 2000) |
 
-### Example Queries
+---
+
+## Scraping Data
+
+Data is sourced from the **Google Places API**. To run a fresh scrape:
 
 ```bash
-# All enclosed parks in Yorkshire, sorted by rating
-GET /parks?county=yorkshire&is_fully_enclosed=true&sort=rating
+python scraper/scraper.py --source google --google-api-key YOUR_KEY
+```
 
-# Parks near London with water and parking
-GET /parks?feature=water&feature=parking&county=london
+After scraping, run the cleaning scripts:
+```bash
+python fix_parks.py      # filter non-parks, infer features
+python fix_counties.py   # normalise county names via postcodes.io
+```
 
-# Parks nearby (within 20km of Manchester city centre)
-GET /parks/nearby?lat=53.4808&lng=-2.2426&radius_km=20
+Then commit `data/parks.json` and reload MongoDB:
+```bash
+git add data/parks.json
+git commit -m "Fresh park data"
+git push
+curl -X POST https://dogpark-api.vercel.app/admin/reload
+```
 
-# Search for "paddock" parks
-GET /parks/search?q=paddock
+Note: keep your Google API key out of the codebase and make sure `.env` is in `.gitignore`.
 
-# Parks under £10/hour
-GET /parks?max_price_per_hour=10&sort=price
+---
+
+## Deployment (Vercel)
+
+The app is deployed as a single Vercel project:
+- The Python API is served as a serverless function
+- The built Vue frontend (`frontend/dist/`) is served as static files
+- Routes are configured in `vercel.json`
+
+To redeploy, push to `main` and Vercel will auto-deploy.
+
+Required environment variable in Vercel:
+```
+MONGO_URI = mongodb+srv://...
 ```
 
 ---
 
-## Scraping Sources
+## Features
 
-| Source | Description | Notes |
-|--------|-------------|-------|
-| **dogwalkingfields.co.uk** | UK's largest enclosed field directory | Hire-by-hour fields |
-| **sniffspot.co.uk** | Private secure dog areas | Good for urban areas |
-| **paddocksforpooches.co.uk** | Dedicated paddock directory | Rural coverage |
-| **Google Places API** | Maps-based search | Requires API key, best coverage |
-
----
-
-## Adding New Data
-
-You can add parks manually by appending to `data/parks.json` and calling:
-```bash
-curl -X POST http://localhost:8000/admin/reload
-```
+- Map view with Leaflet, custom markers and gold highlighting for favourited parks
+- Paginated list view with photos, ratings and feature icons
+- Full-text search across name, town, county and address
+- Filters by feature (parking, water, agility, etc.) and county with search
+- Favourites persisted in localStorage with a dedicated tab
+- Fully responsive with burger menu and sidebar drawer on mobile
+- Real photos from Google Places using clean CDN URLs with no API key embedded
 
 ---
 
-## Frontend Integration
+## Credits
 
-This API is designed to power a frontend with:
-- 📍 **Map view** — use `/parks/nearby` for location-based rendering
-- 📋 **List view** — use `/parks` with filters and pagination
-- 🔍 **Search** — use `/parks/search`
-- 📌 **Favourites** — store park IDs client-side (localStorage / user DB)
-- 🗺️ **Area browser** — use `/counties` → `/towns` → `/parks?town=...`
-
----
-
-## Data Model
-
-Each park contains:
-- Identity: `id`, `name`, `description`
-- Location: `address`, `town`, `county`, `postcode`, `latitude`, `longitude`
-- Security: `is_secure`, `is_fully_enclosed`, `fence_height_m`
-- Details: `size_acres`, `price_per_hour`, `is_free`, `max_dogs`
-- Contact: `phone`, `website`, `email`, `opening_hours`
-- Features: `features[]` (e.g. `parking`, `water`, `agility_equipment`, `lighting`)
-- Quality: `rating`, `review_count`, `images[]`
-- Meta: `source`, `source_url`, `last_verified`, `created_at`
+- Icons by [icons8](https://icons8.com)
+- Maps (c) [OpenStreetMap](https://openstreetmap.org/copyright) contributors
+- Built by [Adam Rafferty Web Design](https://www.adamraffertywebdesign.com)
