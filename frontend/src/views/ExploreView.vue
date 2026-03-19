@@ -26,7 +26,7 @@
     </div>
 
     <div v-if="store.loading" class="loading">
-      <PvProgressSpinner style="width:36px;height:36px" strokeWidth="4" />
+      <PvProgressSpinner style="width:36px;height:36px" strokeWidth="4" animationDuration=".8s" />
       <span>Loading parks…</span>
     </div>
 
@@ -125,7 +125,16 @@ watch(() => store.allParks, (v) => { if (view.value === 'map') mapParks.value = 
 .view-btn.active { background: var(--forest-mid); border-color: var(--forest-mid); color: white; font-weight: 600; }
 .view-btn.active :deep(.app-icon) { filter: brightness(0) invert(1); }
 
-.loading { display: flex; align-items: center; justify-content: center; gap: 12px; flex: 1; font-size: 14px; color: var(--text-muted); }
+.loading {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 14px; flex: 1; width: 100%;
+  font-size: 14px; font-weight: 500;
+  color: var(--forest);
+}
+:deep(.p-progress-spinner-circle) {
+  stroke: var(--forest-mid) !important;
+}
 .error-banner {
   margin: 16px; padding: 14px 16px; background: #fff3cd; border: 1px solid #ffc107;
   border-radius: 10px; font-size: 13px; color: #856404; display: flex; align-items: center; gap: 8px;
