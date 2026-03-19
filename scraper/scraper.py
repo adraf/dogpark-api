@@ -436,36 +436,129 @@ class GooglePlacesScraper:
 
     PHOTO_URL = "https://maps.googleapis.com/maps/api/place/photo"
 
+    # Specific UK-relevant search queries — all imply bookable, secure, private
+    SEARCH_QUERIES = [
+        "secure dog field hire",
+        "enclosed dog walking field hire",
+        "private dog paddock hire",
+        "dog exercise field hire",
+        "secure dog park hire",
+        "fenced dog field hire UK",
+        "dog agility field hire",
+    ]
+
+    # One search centre per UK county/region for broad coverage
+    UK_SEARCH_CENTRES = [
+        # England
+        ("Bedfordshire", 52.1351, -0.4660),
+        ("Berkshire", 51.4500, -1.0000),
+        ("Bristol", 51.4545, -2.5879),
+        ("Buckinghamshire", 51.8137, -0.8119),
+        ("Cambridgeshire", 52.2053, 0.1218),
+        ("Cheshire", 53.2000, -2.6000),
+        ("Cornwall", 50.2660, -5.0527),
+        ("Cumbria", 54.5772, -2.7975),
+        ("Derbyshire", 53.1000, -1.5700),
+        ("Devon", 50.7156, -3.5309),
+        ("Dorset", 50.7487, -2.3444),
+        ("County Durham", 54.7800, -1.5700),
+        ("East Sussex", 50.9085, 0.2494),
+        ("Essex", 51.7343, 0.4691),
+        ("Gloucestershire", 51.8642, -2.2380),
+        ("Hampshire", 51.0577, -1.3080),
+        ("Herefordshire", 52.0565, -2.7148),
+        ("Hertfordshire", 51.8098, -0.2376),
+        ("Isle of Wight", 50.6938, -1.3047),
+        ("Kent", 51.2787, 0.5217),
+        ("Lancashire", 53.7590, -2.6980),
+        ("Leicestershire", 52.6369, -1.1398),
+        ("Lincolnshire", 53.2307, -0.5406),
+        ("Greater London", 51.5074, -0.1278),
+        ("Greater Manchester", 53.4808, -2.2426),
+        ("Merseyside", 53.4084, -2.9916),
+        ("Norfolk", 52.6293, 1.2977),
+        ("North Yorkshire", 54.0570, -1.5166),
+        ("Northamptonshire", 52.2405, -0.9027),
+        ("Northumberland", 55.2083, -2.0784),
+        ("Nottinghamshire", 53.1000, -1.0200),
+        ("Oxfordshire", 51.7520, -1.2577),
+        ("Shropshire", 52.7077, -2.7530),
+        ("Somerset", 51.1000, -2.9000),
+        ("South Yorkshire", 53.3811, -1.4701),
+        ("Staffordshire", 52.8793, -2.0573),
+        ("Suffolk", 52.1872, 0.9708),
+        ("Surrey", 51.3148, -0.5600),
+        ("Tyne and Wear", 54.9783, -1.6178),
+        ("Warwickshire", 52.2817, -1.5849),
+        ("West Midlands", 52.4862, -1.8904),
+        ("West Sussex", 50.9781, -0.5023),
+        ("West Yorkshire", 53.8008, -1.5491),
+        ("Wiltshire", 51.3492, -1.9927),
+        ("Worcestershire", 52.1884, -2.2210),
+        # Wales
+        ("Cardiff", 51.4816, -3.1791),
+        ("Swansea", 51.6214, -3.9436),
+        ("North Wales", 53.1000, -3.8000),
+        ("Mid Wales", 52.3000, -3.5000),
+        # Scotland
+        ("Edinburgh", 55.9533, -3.1883),
+        ("Glasgow", 55.8642, -4.2518),
+        ("Highland", 57.4779, -4.2247),
+        ("Fife", 56.2082, -3.1495),
+        ("Aberdeenshire", 57.2667, -2.5500),
+        ("Tayside", 56.4620, -3.0174),
+        ("Dumfries and Galloway", 55.0700, -3.6053),
+        ("Ayrshire", 55.4594, -4.6294),
+        ("Lanarkshire", 55.6736, -3.7820),
+        # Northern Ireland
+        ("Belfast", 54.5973, -5.9301),
+        ("County Antrim", 54.8600, -6.2600),
+        ("County Down", 54.3296, -5.7296),
+    ]
+
+    # Reject these Google place types entirely
+    EXCLUDED_TYPES = {
+        'stadium', 'airport', 'hospital', 'school', 'university', 'church',
+        'mosque', 'synagogue', 'cemetery', 'museum', 'art_gallery', 'casino',
+        'shopping_mall', 'supermarket', 'grocery_or_supermarket', 'bank',
+        'police', 'fire_station', 'post_office', 'subway_station',
+        'train_station', 'bus_station', 'taxi_stand', 'gas_station',
+        'car_wash', 'parking', 'lodging', 'hotel',
+    }
+
+    # Must contain at least one of these in name or types
+    DOG_KEYWORDS = [
+        'dog', 'canine', 'hound', 'pup', 'pooch', 'k9', 'k-9',
+        'secure field', 'dog field', 'paddock', 'dog park', 'dog exercise',
+    ]
+
     def __init__(self, api_key: str):
         self.api_key = api_key
 
     def scrape(self) -> list[DogPark]:
         parks = []
-        queries = [
-            "secure dog park",
-            "enclosed dog park",
-            "fenced dog park",
-            "secure dog walking field",
-            "private dog paddock",
-        ]
-        for city, lat, lng in self.UK_SEARCH_CENTRES:
-            for query in queries:
-                log.info(f"[GooglePlaces] {query} near {city}")
+        seen_ids = set()
+        for county, lat, lng in self.UK_SEARCH_CENTRES:
+            for query in self.SEARCH_QUERIES:
+                log.info(f"[GooglePlaces] '{query}' in {county}")
                 try:
-                    results = self._search(f"{query} near {city}", lat, lng)
-                    parks.extend(results)
-                    time.sleep(0.5)
+                    results = self._search(query, lat, lng, county)
+                    for park in results:
+                        if park.id not in seen_ids:
+                            seen_ids.add(park.id)
+                            parks.append(park)
+                    time.sleep(0.3)
                 except Exception as e:
-                    log.warning(f"[GooglePlaces] Failed: {e}")
+                    log.warning(f"[GooglePlaces] Failed {query} in {county}: {e}")
         return parks
 
-    def _search(self, query: str, lat: float, lng: float) -> list[DogPark]:
+    def _search(self, query: str, lat: float, lng: float, county: str) -> list[DogPark]:
         resp = requests.get(
             self.PLACES_URL,
             params={
                 "query": query,
                 "location": f"{lat},{lng}",
-                "radius": 50000,
+                "radius": 40000,
                 "region": "uk",
                 "key": self.api_key,
             },
@@ -475,7 +568,21 @@ class GooglePlacesScraper:
         parks = []
         for result in data.get("results", []):
             try:
-                park = self._parse_result(result)
+                # Reject excluded place types
+                types = set(result.get("types", []))
+                if types & self.EXCLUDED_TYPES:
+                    continue
+                # Must be dog-related
+                name = result.get("name", "").lower()
+                if not any(kw in name for kw in self.DOG_KEYWORDS):
+                    # Allow through if types suggest it could be a park/field
+                    if not types & {'park', 'campground', 'establishment'}:
+                        continue
+                    # But still needs dog keyword somewhere
+                    vicinity = result.get("vicinity", "").lower()
+                    if not any(kw in vicinity for kw in self.DOG_KEYWORDS):
+                        continue
+                park = self._parse_result(result, county)
                 parks.append(park)
             except Exception as e:
                 log.debug(f"[GooglePlaces] Parse error: {e}")
@@ -511,29 +618,27 @@ class GooglePlacesScraper:
                 timeout=10,
                 allow_redirects=True,
             )
-            # The final URL after redirect is a CDN URL with no API key
             return resp.url
         except Exception:
             return None
 
-    def _parse_result(self, r: dict) -> DogPark:
+    def _parse_result(self, r: dict, county: str = "") -> DogPark:
         loc      = r.get("geometry", {}).get("location", {})
         name     = r.get("name", "")
-        address  = r.get("formatted_address", "")
+        address  = r.get("formatted_address", "") or r.get("vicinity", "")
         postcode = _extract_postcode(address)
         place_id = r.get("place_id", "")
 
-        # Fetch full details for phone, website, hours, photos
-        details  = {}
-        images   = []
-        phone    = None
-        website  = None
-        opening  = None
+        details     = {}
+        images      = []
+        phone       = None
+        website     = None
+        opening     = None
         description = ""
 
         try:
             details = self._get_details(place_id)
-            time.sleep(0.2)  # polite delay
+            time.sleep(0.2)
 
             phone   = details.get("formatted_phone_number")
             website = details.get("website")
@@ -542,23 +647,25 @@ class GooglePlacesScraper:
             summary = details.get("editorial_summary", {})
             description = summary.get("overview", "")
 
-            # Get up to 3 photo URLs — follow redirect to get clean CDN URL
-            photos = details.get("photos", [])[:5]  # try up to 5 in case some fail
+            # Get up to 3 clean CDN photo URLs
+            photos = details.get("photos", [])[:5]
             for photo in photos:
                 if len(images) >= 3:
                     break
                 ref = photo.get("photo_reference")
                 if ref:
                     url = self._resolve_photo_url(ref)
-                    # Only keep clean CDN URLs — reject any that still contain the API key
                     if url and "key=" not in url:
                         images.append(url)
 
         except Exception as e:
             log.debug(f"[GooglePlaces] Details fetch failed for {name}: {e}")
 
-        # Infer features from place types and review text
+        # Infer features from all available text
         features = self._infer_features(r, details)
+
+        # Use search county if address parsing fails
+        resolved_county = _guess_county(address) or county
 
         return DogPark(
             id=_make_id(name, place_id),
@@ -566,10 +673,12 @@ class GooglePlacesScraper:
             description=description,
             address=address,
             town=_guess_town(address),
-            county=_guess_county(address),
+            county=resolved_county,
             postcode=postcode,
             latitude=loc.get("lat"),
             longitude=loc.get("lng"),
+            is_fully_enclosed=True,
+            is_secure=True,
             rating=r.get("rating"),
             review_count=r.get("user_ratings_total", 0),
             phone=phone,
