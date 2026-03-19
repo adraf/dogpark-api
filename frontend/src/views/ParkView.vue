@@ -30,7 +30,7 @@
           </div>
         </div>
         <button class="fav-btn" :class="{ active: store.isFavourite(park.id) }" @click="store.toggleFavourite(park.id)">
-          <AppIcon :name="store.isFavourite(park.id) ? 'heart-1' : 'heart'" :size="20" />
+          <AppIcon :name="store.isFavourite(park.id) ? 'heart' : 'heart-1'" :size="20" />
         </button>
       </div>
 

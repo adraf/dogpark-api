@@ -8,7 +8,7 @@
         @click.stop="store.toggleFavourite(park.id)"
         :title="store.isFavourite(park.id) ? 'Remove from favourites' : 'Add to favourites'"
       >
-        <AppIcon :name="store.isFavourite(park.id) ? 'heart-1' : 'heart'" :size="16" />
+        <AppIcon :name="store.isFavourite(park.id) ? 'heart' : 'heart-1'" :size="16" />
       </button>
     </div>
 
