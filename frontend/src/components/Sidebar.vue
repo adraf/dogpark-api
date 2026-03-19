@@ -97,18 +97,25 @@
     <!-- County (unified scrollable list) -->
     <section class="section">
       <h3 class="section-label">County</h3>
-      <div class="county-list" :class="{ expanded: countyExpanded }">
+
+      <div class="county-search">
+        <AppIcon name="search" :size="13" class="csearch-icon" />
+        <input v-model="countySearch" type="text" placeholder="Search counties..." />
+      </div>
+
+      <div class="county-list" :class="{ expanded: countyExpanded || countySearch }">
         <div
-          v-for="c in sortedCounties" :key="c.county"
+          v-for="c in filteredCounties" :key="c.county"
           class="county-item" :class="{ active: store.filters.county === c.county }"
           @click="toggleCounty(c.county)"
         >
           {{ c.county }}
           <span class="county-count">{{ c.count }}</span>
         </div>
+        <div v-if="filteredCounties.length === 0" class="county-empty">No counties found</div>
       </div>
 
-      <button v-if="sortedCounties.length > TOP_N" class="show-more-btn" @click="countyExpanded = !countyExpanded">
+      <button v-if="!countySearch && sortedCounties.length > TOP_N" class="show-more-btn" @click="countyExpanded = !countyExpanded">
         <AppIcon :name="countyExpanded ? 'collapse-arrow' : 'expand-arrow'" :size="14" />
         <span>{{ countyExpanded ? 'Show less' : `Show ${sortedCounties.length - TOP_N} more` }}</span>
       </button>
@@ -155,7 +162,14 @@ const allFeatureFilters = computed(() => {
 
 const enclosedCount = computed(() => store.allParks.filter(p => p.is_fully_enclosed).length)
 const freeCount     = computed(() => store.allParks.filter(p => p.is_free).length)
-const sortedCounties = computed(() => [...store.counties].sort((a, b) => b.count - a.count))
+const countySearch   = ref('')
+const sortedCounties  = computed(() => [...store.counties].sort((a, b) => a.county.localeCompare(b.county)))
+const filteredCounties = computed(() => {
+  const all = countySearch.value
+    ? sortedCounties.value.filter(c => c.county.toLowerCase().includes(countySearch.value.toLowerCase()))
+    : sortedCounties.value
+  return countyExpanded.value || countySearch.value ? all : all.slice(0, TOP_N)
+})
 
 const priceLabel = computed(() => store.filters.maxPrice >= 30 ? 'All' : `£${store.filters.maxPrice}/hr`)
 const sizeLabel  = computed(() => store.filters.minSize  === 0  ? 'Any' : `${store.filters.minSize}+ acres`)
@@ -234,6 +248,20 @@ onMounted(() => {
   border-radius: 6px; transition: background 0.12s;
 }
 .show-more-btn:hover { background: var(--parchment); }
+
+/* County search */
+.county-search {
+  position: relative; display: flex; align-items: center; margin-bottom: 6px;
+}
+.csearch-icon { position: absolute; left: 8px; opacity: 0.4; pointer-events: none; }
+.county-search input {
+  width: 100%; padding: 5px 10px 5px 26px;
+  border-radius: 8px; border: 1px solid var(--border);
+  font-size: 12px; outline: none; color: var(--text);
+  background: var(--parchment);
+}
+.county-search input:focus { border-color: var(--forest-mid); background: white; }
+.county-empty { font-size: 12px; color: var(--text-muted); padding: 6px 10px; }
 
 /* County list — unified, scrolls as one */
 .county-list {

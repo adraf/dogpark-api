@@ -8086,49 +8086,6 @@
     "created_at": "2026-03-19T10:27:09.794505"
   },
   {
-    "id": "the_phoenix_dog_park_private_hire_chijcbrfvw1bz0gromgomoqb3cy",
-    "name": "The Phoenix Dog Park Private Hire",
-    "description": "",
-    "address": "Cuilin, Macetown, Tara, Co. Meath, Ireland",
-    "town": "Co. Meath",
-    "county": "Co. Meath",
-    "postcode": "",
-    "country": "UK",
-    "latitude": 53.5807738,
-    "longitude": -6.494951899999999,
-    "is_secure": true,
-    "is_fully_enclosed": true,
-    "fence_height_m": null,
-    "size_acres": null,
-    "price_per_hour": null,
-    "is_free": false,
-    "phone": null,
-    "website": "http://www.thephoenixdogpark.com/",
-    "email": null,
-    "opening_hours": "Monday: 8:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Tuesday: 8:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Wednesday: 8:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Thursday: 8:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Friday: 8:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Saturday: 8:00\u202fAM\u2009\u2013\u20099:00\u202fPM, Sunday: 8:00\u202fAM\u2009\u2013\u20099:00\u202fPM",
-    "features": [
-      "toilet_facilities",
-      "separate_small_dog_area"
-    ],
-    "dog_size_allowed": [
-      "small",
-      "medium",
-      "large"
-    ],
-    "max_dogs": null,
-    "source": "google_places",
-    "source_url": "https://maps.google.com/?cid=ChIJcbRfvW1BZ0gRoMgOmoqb3cY",
-    "rating": 4.9,
-    "review_count": 78,
-    "images": [
-      "https://lh3.googleusercontent.com/place-photos/AL8-SNHHFAzE-5I2E9wikREvnbgtyMzppOmUnEbTuxK0owAtSN2g9ZLifUxamoeM5xoK0SAH20Ro74uXD8XEuSvm0JGpNv3KIiKFtVJ8ZmbHkqwgPRRBo84_WtsShraVs3WhygU9g_pyn2BoHh8vCw=s1600-w800",
-      "https://lh3.googleusercontent.com/place-photos/AL8-SNGmcCNMAe5GdhuSfCowOCmrbNKdOc5AlAGuGjYywYX9jFi6h2YFXk_9t7Nt76Gd2kjAyY4VCfGbgsJk3sdP3G_8WfKQ_OOgzb2hxEacH_K3Epg1t4T-VNOlQdqzCswaCZTOSTcdqNwrJhOfEQ=s1600-w800",
-      "https://lh3.googleusercontent.com/place-photos/AL8-SNG6FjdGApp4snCpbibAukUD41dFNqdVR6Ch65c1__ghVhWYExhKS0bdjeFZsHUk9IAO28cCN4B5LCugiCaIE7br0qPH5UZ2b8D4EdKgOQ0DDaQznnPPSbxprWBOC4qKQSwIW1I9kt0EQNiOtA=s1600-w800"
-    ],
-    "last_verified": "2026-03-19T12:00:38.860301",
-    "created_at": "2026-03-19T12:00:38.860319"
-  },
-  {
     "id": "dog_field_uk_chijasul5r6bcugryitc8v3ujyu",
     "name": "Dog Field UK",
     "description": "",
@@ -28560,7 +28517,7 @@
     "description": "",
     "address": "Horton Rd, Slapton, Leighton Buzzard LU7",
     "town": "Slapton",
-    "county": "Slapton",
+    "county": "Bedfordshire",
     "postcode": "",
     "country": "UK",
     "latitude": 51.8684752,
@@ -29053,7 +29010,7 @@
     "description": "",
     "address": "Low Spen Paddocks, Spen Ln, Rowlands Gill NE39 2BX",
     "town": "Spen Ln",
-    "county": "Spen Ln",
+    "county": "Tyne and Wear",
     "postcode": "NE39 2BX",
     "country": "UK",
     "latitude": 54.9268511,

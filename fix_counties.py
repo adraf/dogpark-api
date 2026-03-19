@@ -299,6 +299,19 @@ print(f'Got county data for {len(postcode_map)} postcodes')
 fixed = 0
 unresolved = []
 for p in parks:
+    # Manual overrides for known problem parks
+    if 'ireland' in (p.get('address') or '').lower() or 'co. meath' in (p.get('address') or '').lower():
+        p['county'] = None  # will be removed - not in UK
+        continue
+    if 'slapton' in (p.get('address') or '').lower() and 'leighton buzzard' in (p.get('address') or '').lower():
+        p['county'] = 'Bedfordshire'
+        fixed += 1
+        continue
+    if 'rowlands gill' in (p.get('address') or '').lower() or 'ne39' in (p.get('address') or '').lower():
+        p['county'] = 'Tyne and Wear'
+        fixed += 1
+        continue
+
     new_county = fix_county(p, postcode_map)
     if new_county:
         if new_county != p.get('county'):
@@ -307,12 +320,15 @@ for p in parks:
     else:
         unresolved.append({'name': p['name'], 'current_county': p.get('county'), 'address': p.get('address'), 'town': p.get('town')})
 
+# Remove non-UK parks
+parks = [p for p in parks if p.get('county')]
+
 print(f'Fixed {fixed} counties')
 print(f'\nUnresolved ({len(unresolved)}) — need manual mapping:')
 for u in unresolved:
     print(f"  {u['name']} | county: {u['current_county']} | town: {u['town']} | address: {u['address']}")
 
-# Save all parks including unresolved
+# Save all parks
 with open('data/parks.json', 'w') as f:
     json.dump(parks, f, indent=2)
 
